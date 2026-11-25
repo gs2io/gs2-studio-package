@@ -85,6 +85,26 @@
       }
     },
     {
+      "componentClassName": "StartInteractable",
+      "condition": {
+        "kind": "comparison",
+        "lhs": {
+          "kind": "foreignRow",
+          "propertyId": "prop_7BX7N28W6KRGHGC40MXEWB2ESC",
+          "rowId": "stamina",
+          "sourceDomainTypeId": "dt_7HR7A7JXK6BHF9B91KEKTDD656"
+        },
+        "operator": "gte",
+        "rhs": {
+          "kind": "property",
+          "propertyId": "prop_00D0TT9XC92MQXXRTF4D7JBY0V"
+        }
+      },
+      "id": "uii_1AQB97J6FRBWJSPT3QVRJPAAWN",
+      "kind": "interactable",
+      "name": "Quest"
+    },
+    {
       "componentClassName": "ClearedLabel",
       "id": "uii_321VVA5XN9AJWSYCCEV3QDDW8A",
       "kind": "templateLabel",

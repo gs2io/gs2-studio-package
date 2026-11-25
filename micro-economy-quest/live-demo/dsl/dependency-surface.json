@@ -2,6 +2,237 @@
   "schemaVersion": 1,
   "packageId": "micro-economy-quest-demo",
   "types": {
+    "Energy": {
+      "id": "dt_7HR7A7JXK6BHF9B91KEKTDD656",
+      "singleEntry": false,
+      "shippedRowIds": [],
+      "canonicalPackageId": "foundation-economy-energy",
+      "canonicalTypeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
+      "delegatedActions": {
+        "Recover": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-energy-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_1XEHH2NYH5BWYTCAZ0SFPMYHW8"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {
+            "config": {
+              "type": "[]transaction::Config",
+              "required": false
+            }
+          }
+        },
+        "Spend": {
+          "targetResource": {
+            "sourcePackageId": "foundation-economy-energy-demo",
+            "resourceKind": "masterData",
+            "resourceId": "mdr_57KN8WGDJJBYHAZR30EV6G0H9R"
+          },
+          "targetActionKey": "Gs2Exchange:RateModel.Exchange",
+          "parameters": {
+            "config": {
+              "type": "[]transaction::Config",
+              "required": false
+            }
+          }
+        }
+      },
+      "uiComponents": {
+        "FullActiveToggle": {
+          "kind": "activeToggle",
+          "name": "Energy",
+          "packageId": "foundation-economy-energy"
+        },
+        "NextRecoveryValue": {
+          "kind": "value",
+          "name": "Energy",
+          "packageId": "foundation-economy-energy"
+        },
+        "RecoverButton": {
+          "kind": "buttonAction",
+          "name": "Energy",
+          "packageId": "foundation-economy-energy-demo",
+          "method": "Recover"
+        },
+        "SpendButton": {
+          "kind": "buttonAction",
+          "name": "Energy",
+          "packageId": "foundation-economy-energy-demo",
+          "method": "Spend"
+        },
+        "StaminaGauge": {
+          "kind": "gauge",
+          "name": "Energy",
+          "packageId": "foundation-economy-energy"
+        },
+        "StaminaLabel": {
+          "kind": "templateLabel",
+          "name": "Energy",
+          "packageId": "foundation-economy-energy"
+        }
+      },
+      "properties": {
+        "currentMaximumValue": "prop_3FDMHC3ZSPXN7XWWC4TWXBDV56",
+        "currentValue": "prop_7BX7N28W6KRGHGC40MXEWB2ESC",
+        "defaultMaximum": "prop_0VK8BTK0YT0KW0ZS5VN7E3RAWK",
+        "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
+        "nextRecoveredAt": "prop_39T9A7P2NH6PNT4W12H0FZX9WW",
+        "overflowedMaximum": "prop_1H7FG0XTK823H3XX35XW00TCFT",
+        "recoveryIntervalMinutes": "prop_7B2HB91QDWZK8SXNC6ZJGCCAEA",
+        "recoveryValue": "prop_5DW145AF8E14EQ3GHSC94QCMBW",
+        "useOverflow": "prop_0DZD8RYHVEY4B0DGB0K83K7DNX"
+      },
+      "propertyDetails": {
+        "currentMaximumValue": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current maximum",
+              "description": "Stamina capacity currently applied to the player (GS2 Stamina maxValue). Time-based recovery stops at this value.",
+              "unit": "points"
+            },
+            "ja": {
+              "label": "現在の上限",
+              "description": "プレイヤーに適用されている現在のスタミナ上限（GS2 Stamina の maxValue）です。時間経過による回復はこの値で止まります。",
+              "unit": "ポイント"
+            }
+          }
+        },
+        "currentValue": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Current value",
+              "description": "Player's current stamina (GS2 Stamina value), excluding any overflow held above the current maximum. The overflow amount is not exposed by this type.",
+              "unit": "points"
+            },
+            "ja": {
+              "label": "現在値",
+              "description": "プレイヤーが現在持っているスタミナ（GS2 Stamina の value）です。上限超過で保持している分は含まず、超過分はこの型では参照できません。",
+              "unit": "ポイント"
+            }
+          }
+        },
+        "defaultMaximum": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Initial maximum",
+              "description": "Starting normal stamina capacity of each player (GS2 Stamina initialCapacity).",
+              "unit": "points"
+            },
+            "ja": {
+              "label": "初期上限",
+              "description": "プレイヤーの通常のスタミナ上限の初期値（GS2 Stamina の initialCapacity）です。",
+              "unit": "ポイント"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "requirement": "always",
+          "bindingHint": "none",
+          "display": {
+            "en": {
+              "label": "ID",
+              "description": "Uniquely identifies the stamina model."
+            },
+            "ja": {
+              "label": "ID",
+              "description": "スタミナを一意に識別します。"
+            }
+          }
+        },
+        "nextRecoveredAt": {
+          "type": "timestamp",
+          "requirement": "always",
+          "bindingHint": "userData",
+          "display": {
+            "en": {
+              "label": "Next recovery time",
+              "description": "Time of the next automatic stamina recovery."
+            },
+            "ja": {
+              "label": "次回回復日時",
+              "description": "次にスタミナが自動回復する日時です。"
+            }
+          }
+        },
+        "overflowedMaximum": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Overflow maximum",
+              "description": "Absolute stamina cap including overflow (GS2 Stamina maxCapacity), at least defaultMaximum. Deployed only when useOverflow is true; otherwise set it to defaultMaximum.",
+              "unit": "points"
+            },
+            "ja": {
+              "label": "超過時上限",
+              "description": "上限超過分を含めたスタミナの絶対上限（GS2 Stamina の maxCapacity）で、defaultMaximum 以上にします。useOverflow が true のときだけデプロイされ、false のときは defaultMaximum と同じ値を入れます。",
+              "unit": "ポイント"
+            }
+          }
+        },
+        "recoveryIntervalMinutes": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Recovery interval",
+              "description": "Interval between automatic stamina recoveries.",
+              "unit": "minutes"
+            },
+            "ja": {
+              "label": "回復間隔",
+              "description": "スタミナを自動回復する間隔です。",
+              "unit": "分"
+            }
+          }
+        },
+        "recoveryValue": {
+          "type": "int32",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Recovery amount",
+              "description": "Amount of stamina restored at each recovery interval.",
+              "unit": "points"
+            },
+            "ja": {
+              "label": "1回の回復量",
+              "description": "回復間隔ごとに加算するスタミナ量です。",
+              "unit": "ポイント"
+            }
+          }
+        },
+        "useOverflow": {
+          "type": "bool",
+          "requirement": "always",
+          "bindingHint": "masterData",
+          "display": {
+            "en": {
+              "label": "Allow overflow",
+              "description": "Whether recovery actions such as RecoveryEnergy may raise stamina above the current maximum, up to overflowedMaximum (GS2 Stamina isOverflow). Time-based recovery still stops at the current maximum."
+            },
+            "ja": {
+              "label": "上限超過を許可",
+              "description": "RecoveryEnergy などの回復アクションで、現在の上限を超えて overflowedMaximum までスタミナを増やせるかを設定します（GS2 Stamina の isOverflow）。時間経過による回復は現在の上限で止まります。"
+            }
+          }
+        }
+      }
+    },
     "Progress": {
       "id": "dt_00D0TT9XC903SNVA7P9GFM98G3",
       "singleEntry": true,
@@ -188,6 +419,11 @@
           "name": "Quest",
           "packageId": "micro-economy-quest-demo",
           "method": "Start"
+        },
+        "StartInteractable": {
+          "kind": "interactable",
+          "name": "Quest",
+          "packageId": "micro-economy-quest-demo"
         },
         "UnclearedActiveToggle": {
           "kind": "activeToggle",

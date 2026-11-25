@@ -28,11 +28,11 @@ namespace GS2Studio.Generated.Energy
             Gs2Domain gs2,
             IGameSession session,
             CancellationToken cancellationToken = default,
+            string? __sdk__staminaEnergyNamespaceStaminaModel_1 = null,
             string? __sdk__exchangeEnergyRecoverNamespaceRateModel_1 = null,
             string? __sdk__transactionAcquireAction_1 = null,
             string? __sdk__exchangeEnergyConsumeNamespaceRateModel_1 = null,
             string? __sdk__transactionConsumeAction_1 = null,
-            string? __sdk__staminaEnergyNamespaceStaminaModel_1 = null,
             string? __sdk__userdataStaminaEnergyStaminaModel_1 = null);
         IEnergyBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session);
     }
@@ -46,14 +46,14 @@ namespace GS2Studio.Generated.Energy
             Gs2Domain gs2,
             IGameSession session,
             CancellationToken cancellationToken = default,
+            string? __sdk__staminaEnergyNamespaceStaminaModel_1 = null,
             string? __sdk__exchangeEnergyRecoverNamespaceRateModel_1 = null,
             string? __sdk__transactionAcquireAction_1 = null,
             string? __sdk__exchangeEnergyConsumeNamespaceRateModel_1 = null,
             string? __sdk__transactionConsumeAction_1 = null,
-            string? __sdk__staminaEnergyNamespaceStaminaModel_1 = null,
             string? __sdk__userdataStaminaEnergyStaminaModel_1 = null)
         {
-            return await EnergyBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__exchangeEnergyRecoverNamespaceRateModel_1, __sdk__transactionAcquireAction_1, __sdk__exchangeEnergyConsumeNamespaceRateModel_1, __sdk__transactionConsumeAction_1, __sdk__staminaEnergyNamespaceStaminaModel_1, __sdk__userdataStaminaEnergyStaminaModel_1);
+            return await EnergyBinder.CreateAsync(id, gs2, session, cancellationToken, __sdk__staminaEnergyNamespaceStaminaModel_1, __sdk__exchangeEnergyRecoverNamespaceRateModel_1, __sdk__transactionAcquireAction_1, __sdk__exchangeEnergyConsumeNamespaceRateModel_1, __sdk__transactionConsumeAction_1, __sdk__userdataStaminaEnergyStaminaModel_1);
         }
         public IEnergyBinderCollection CreateCollection(Gs2Domain gs2, IGameSession session)
         {

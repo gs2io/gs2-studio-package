@@ -39,11 +39,11 @@ namespace GS2Studio.Generated.Energy
         StaminaEnergyMaster,
 
         /// <summary>Built by the ExchangeEnergyRecover master-data list axis.</summary>
-        [Gs2SkipsLoaders("ExchangeEnergyConsumeNamespaceRateModel", "TransactionConsumeAction", "StaminaEnergyNamespaceStaminaModel", "UserdataStaminaEnergyStaminaModel")]
+        [Gs2SkipsLoaders("StaminaEnergyNamespaceStaminaModel", "ExchangeEnergyConsumeNamespaceRateModel", "TransactionConsumeAction", "UserdataStaminaEnergyStaminaModel")]
         ExchangeEnergyRecoverMaster,
 
         /// <summary>Built by the ExchangeEnergyConsume master-data list axis.</summary>
-        [Gs2SkipsLoaders("ExchangeEnergyRecoverNamespaceRateModel", "TransactionAcquireAction", "StaminaEnergyNamespaceStaminaModel", "UserdataStaminaEnergyStaminaModel")]
+        [Gs2SkipsLoaders("StaminaEnergyNamespaceStaminaModel", "ExchangeEnergyRecoverNamespaceRateModel", "TransactionAcquireAction", "UserdataStaminaEnergyStaminaModel")]
         ExchangeEnergyConsumeMaster,
 
         /// <summary>Built by the StaminaEnergy user-data list axis.</summary>
@@ -363,11 +363,11 @@ namespace GS2Studio.Generated.Energy
         private bool _disposed;
         internal bool _mounted;
 
+        private readonly Gs2Bind.Gs2Stamina.StaminaModelLoader __staminaEnergyNamespaceStaminaModelLoader;
         private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeEnergyRecoverNamespaceRateModelLoader;
         private readonly Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader __transactionAcquireActionLoader;
         private readonly Gs2Bind.Gs2Exchange.RateModelLoader __exchangeEnergyConsumeNamespaceRateModelLoader;
         private readonly Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader __transactionConsumeActionLoader;
-        private readonly Gs2Bind.Gs2Stamina.StaminaModelLoader __staminaEnergyNamespaceStaminaModelLoader;
         private readonly Gs2Bind.Gs2Stamina.StaminaLoader __userdataStaminaEnergyStaminaModelLoader;
 
         private readonly EnergyMountSurface _mountSurfaceValue;
@@ -434,21 +434,21 @@ namespace GS2Studio.Generated.Energy
             Gs2Domain gs2,
             IGameSession session,
             EnergyMountSurface _mountSurface = EnergyMountSurface.Full,
+            string? __sdk__staminaEnergyNamespaceStaminaModel_1 = null,
             string? __sdk__exchangeEnergyRecoverNamespaceRateModel_1 = null,
             string? __sdk__transactionAcquireAction_1 = null,
             string? __sdk__exchangeEnergyConsumeNamespaceRateModel_1 = null,
             string? __sdk__transactionConsumeAction_1 = null,
-            string? __sdk__staminaEnergyNamespaceStaminaModel_1 = null,
             string? __sdk__userdataStaminaEnergyStaminaModel_1 = null
         ) : base(model, gs2, session)
         {
 
             _mountSurfaceValue = _mountSurface;
+            __staminaEnergyNamespaceStaminaModelLoader = Runs__staminaEnergyNamespaceStaminaModelLoader ? new Gs2Bind.Gs2Stamina.StaminaModelLoader("Energy", (string.IsNullOrEmpty(__sdk__staminaEnergyNamespaceStaminaModel_1) ? _model.Id : __sdk__staminaEnergyNamespaceStaminaModel_1!)) : null!;
             __exchangeEnergyRecoverNamespaceRateModelLoader = Runs__exchangeEnergyRecoverNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("EnergyRecover", (string.IsNullOrEmpty(__sdk__exchangeEnergyRecoverNamespaceRateModel_1) ? _model.Id : __sdk__exchangeEnergyRecoverNamespaceRateModel_1!)) : null!;
             __transactionAcquireActionLoader = Runs__transactionAcquireActionLoader ? new Gs2Bind.Gs2Exchange.RateModelAcquireActionLoader("EnergyRecover", (string.IsNullOrEmpty(__sdk__transactionAcquireAction_1) ? _model.Id : __sdk__transactionAcquireAction_1!), 0) : null!;
             __exchangeEnergyConsumeNamespaceRateModelLoader = Runs__exchangeEnergyConsumeNamespaceRateModelLoader ? new Gs2Bind.Gs2Exchange.RateModelLoader("EnergyConsume", (string.IsNullOrEmpty(__sdk__exchangeEnergyConsumeNamespaceRateModel_1) ? _model.Id : __sdk__exchangeEnergyConsumeNamespaceRateModel_1!)) : null!;
             __transactionConsumeActionLoader = Runs__transactionConsumeActionLoader ? new Gs2Bind.Gs2Exchange.RateModelConsumeActionLoader("EnergyConsume", (string.IsNullOrEmpty(__sdk__transactionConsumeAction_1) ? _model.Id : __sdk__transactionConsumeAction_1!), 0) : null!;
-            __staminaEnergyNamespaceStaminaModelLoader = Runs__staminaEnergyNamespaceStaminaModelLoader ? new Gs2Bind.Gs2Stamina.StaminaModelLoader("Energy", (string.IsNullOrEmpty(__sdk__staminaEnergyNamespaceStaminaModel_1) ? _model.Id : __sdk__staminaEnergyNamespaceStaminaModel_1!)) : null!;
             __userdataStaminaEnergyStaminaModelLoader = Runs__userdataStaminaEnergyStaminaModelLoader ? new Gs2Bind.Gs2Stamina.StaminaLoader("Energy", (string.IsNullOrEmpty(__sdk__userdataStaminaEnergyStaminaModel_1) ? _model.Id : __sdk__userdataStaminaEnergyStaminaModel_1!)) : null!;
         }
 
@@ -466,15 +466,15 @@ namespace GS2Studio.Generated.Energy
             Gs2Domain gs2,
             IGameSession session,
             CancellationToken cancellationToken = default,
+            string? __sdk__staminaEnergyNamespaceStaminaModel_1 = null,
             string? __sdk__exchangeEnergyRecoverNamespaceRateModel_1 = null,
             string? __sdk__transactionAcquireAction_1 = null,
             string? __sdk__exchangeEnergyConsumeNamespaceRateModel_1 = null,
             string? __sdk__transactionConsumeAction_1 = null,
-            string? __sdk__staminaEnergyNamespaceStaminaModel_1 = null,
             string? __sdk__userdataStaminaEnergyStaminaModel_1 = null)
         {
             var model = CreateModel(id);
-            var binder = new EnergyBinder(model, gs2, session, __sdk__exchangeEnergyRecoverNamespaceRateModel_1: __sdk__exchangeEnergyRecoverNamespaceRateModel_1, __sdk__transactionAcquireAction_1: __sdk__transactionAcquireAction_1, __sdk__exchangeEnergyConsumeNamespaceRateModel_1: __sdk__exchangeEnergyConsumeNamespaceRateModel_1, __sdk__transactionConsumeAction_1: __sdk__transactionConsumeAction_1, __sdk__staminaEnergyNamespaceStaminaModel_1: __sdk__staminaEnergyNamespaceStaminaModel_1, __sdk__userdataStaminaEnergyStaminaModel_1: __sdk__userdataStaminaEnergyStaminaModel_1);
+            var binder = new EnergyBinder(model, gs2, session, __sdk__staminaEnergyNamespaceStaminaModel_1: __sdk__staminaEnergyNamespaceStaminaModel_1, __sdk__exchangeEnergyRecoverNamespaceRateModel_1: __sdk__exchangeEnergyRecoverNamespaceRateModel_1, __sdk__transactionAcquireAction_1: __sdk__transactionAcquireAction_1, __sdk__exchangeEnergyConsumeNamespaceRateModel_1: __sdk__exchangeEnergyConsumeNamespaceRateModel_1, __sdk__transactionConsumeAction_1: __sdk__transactionConsumeAction_1, __sdk__userdataStaminaEnergyStaminaModel_1: __sdk__userdataStaminaEnergyStaminaModel_1);
             await binder.MountAsync(cancellationToken);
             return binder;
         }
@@ -482,6 +482,12 @@ namespace GS2Studio.Generated.Energy
         {
             ThrowIfDisposed();
             cancellationToken.ThrowIfCancellationRequested();
+            var _staminaEnergyNamespaceStaminaModel = Runs__staminaEnergyNamespaceStaminaModelLoader ? await __staminaEnergyNamespaceStaminaModelLoader.Load(_gs2, _session) : null;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (Runs__staminaEnergyNamespaceStaminaModelLoader)
+            {
+                ApplyStaminaEnergyNamespaceStaminaModel(_model, _staminaEnergyNamespaceStaminaModel);
+            }
             var _exchangeEnergyRecoverNamespaceRateModel = Runs__exchangeEnergyRecoverNamespaceRateModelLoader ? await __exchangeEnergyRecoverNamespaceRateModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
             if (_exchangeEnergyRecoverNamespaceRateModel != null)
@@ -501,12 +507,6 @@ namespace GS2Studio.Generated.Energy
             cancellationToken.ThrowIfCancellationRequested();
             if (_transactionConsumeAction != null)
             {
-            }
-            var _staminaEnergyNamespaceStaminaModel = Runs__staminaEnergyNamespaceStaminaModelLoader ? await __staminaEnergyNamespaceStaminaModelLoader.Load(_gs2, _session) : null;
-            cancellationToken.ThrowIfCancellationRequested();
-            if (Runs__staminaEnergyNamespaceStaminaModelLoader)
-            {
-                ApplyStaminaEnergyNamespaceStaminaModel(_model, _staminaEnergyNamespaceStaminaModel);
             }
             var _userdataStaminaEnergyStaminaModel = Runs__userdataStaminaEnergyStaminaModelLoader ? await __userdataStaminaEnergyStaminaModelLoader.Load(_gs2, _session) : null;
             cancellationToken.ThrowIfCancellationRequested();
@@ -529,6 +529,20 @@ namespace GS2Studio.Generated.Energy
         public void Subscribe(Action? onChange = null)
         {
             ThrowIfDisposed();
+            if (Runs__staminaEnergyNamespaceStaminaModelLoader)
+            {
+                _unsubscribers.Add(__staminaEnergyNamespaceStaminaModelLoader.Subscribe(
+                    _gs2,
+                    _session,
+                    (_, _, value) =>
+                    {
+                        if (_disposed) return Task.CompletedTask;
+                        ApplyStaminaEnergyNamespaceStaminaModel(_model, value);
+                        return Task.CompletedTask;
+                    },
+                    () => onChange?.Invoke()
+                ));
+            }
             if (Runs__exchangeEnergyRecoverNamespaceRateModelLoader)
             {
                 _unsubscribers.Add(__exchangeEnergyRecoverNamespaceRateModelLoader.Subscribe(
@@ -597,20 +611,6 @@ namespace GS2Studio.Generated.Energy
                     () => onChange?.Invoke()
                 ));
             }
-            if (Runs__staminaEnergyNamespaceStaminaModelLoader)
-            {
-                _unsubscribers.Add(__staminaEnergyNamespaceStaminaModelLoader.Subscribe(
-                    _gs2,
-                    _session,
-                    (_, _, value) =>
-                    {
-                        if (_disposed) return Task.CompletedTask;
-                        ApplyStaminaEnergyNamespaceStaminaModel(_model, value);
-                        return Task.CompletedTask;
-                    },
-                    () => onChange?.Invoke()
-                ));
-            }
             if (Runs__userdataStaminaEnergyStaminaModelLoader)
             {
                 _unsubscribers.Add(__userdataStaminaEnergyStaminaModelLoader.Subscribe(
@@ -630,6 +630,10 @@ namespace GS2Studio.Generated.Energy
         public void Invalidate()
         {
             ThrowIfDisposed();
+            if (Runs__staminaEnergyNamespaceStaminaModelLoader)
+            {
+                __staminaEnergyNamespaceStaminaModelLoader.Invalidate(_gs2, _session);
+            }
             if (Runs__exchangeEnergyRecoverNamespaceRateModelLoader)
             {
                 __exchangeEnergyRecoverNamespaceRateModelLoader.Invalidate(_gs2, _session);
@@ -645,10 +649,6 @@ namespace GS2Studio.Generated.Energy
             if (Runs__transactionConsumeActionLoader)
             {
                 __transactionConsumeActionLoader.Invalidate(_gs2, _session);
-            }
-            if (Runs__staminaEnergyNamespaceStaminaModelLoader)
-            {
-                __staminaEnergyNamespaceStaminaModelLoader.Invalidate(_gs2, _session);
             }
             if (Runs__userdataStaminaEnergyStaminaModelLoader)
             {

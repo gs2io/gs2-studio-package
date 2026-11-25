@@ -6,6 +6,7 @@
       },
       "rows": ["QuestNameLabel", "QuestBriefLabel", "QuestStartButton", "QuestClearedLabel"],
       "toggles": {
+        "QuestStartInteractable": ["QuestStartButton"],
         "QuestUnclearedActiveToggle": ["QuestClearedLabel"]
       }
     },
@@ -28,7 +29,9 @@
       "rows": ["QuestRunningLabel"]
     },
     "Energy#Your stamina": {
-      "axis": "StaminaEnergyMaster",
+      "key": {
+        "id": "stamina"
+      },
       "rows": [
         "EnergyNextRecoveryValue",
         {

@@ -2,6 +2,9 @@
   "id": "micro-economy-quest-demo",
   "name": "micro-economy-quest-demo",
   "version": "0.0.1",
+  "engines": {
+    "gs2studio": ">=2026.11.12"
+  },
   "dependencies": {
     "foundation-economy-currency": "github:gs2io/gs2-studio-package",
     "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",

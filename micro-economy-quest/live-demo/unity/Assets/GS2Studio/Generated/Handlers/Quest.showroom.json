@@ -87,6 +87,22 @@
       ]
     },
     {
+      "className": "QuestStartInteractable",
+      "kind": "interactable",
+      "valueType": "",
+      "reportsFailure": false,
+      "serializedFields": [
+        {
+          "role": "interactableWhenTrue",
+          "name": "_interactableWhenTrue"
+        },
+        {
+          "role": "interactableWhenFalse",
+          "name": "_interactableWhenFalse"
+        }
+      ]
+    },
+    {
       "className": "QuestUnclearedActiveToggle",
       "kind": "activeToggle",
       "valueType": "",

@@ -198,6 +198,16 @@ export const microEconomyQuestDemo = definePackage({
           { name: "Quest" }
         ),
         UiItem.buttonAction("StartButton", "Start", undefined, { name: "Quest" }),
+        // Start is usable only while the player's stamina covers the cost; the page reads the
+        // stamina row from the Energy handler that sits above the quest rows.
+        UiItem.interactable(
+          "StartInteractable",
+          UiCond.gte(
+            UiSource.rowProp(energy.type("Energy"), STAMINA, "currentValue"),
+            UiSource.prop("staminaCost")
+          ),
+          { name: "Quest" }
+        ),
         UiItem.templateLabel("ClearedLabel", "Cleared", {}, { name: "Quest" }),
         UiItem.activeToggle(
           "UnclearedActiveToggle",

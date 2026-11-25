@@ -1,0 +1,17 @@
+{
+  "actionPropertyTransforms": [],
+  "compositeKeyMode": {
+    "kind": "inherit"
+  },
+  "declared": [],
+  "delegatedActions": [],
+  "id": "dt_7HR7A7JXK6BHF9B91KEKTDD656",
+  "kind": "overlay",
+  "name": "Energy",
+  "renamedInheritedProperties": {},
+  "singleEntry": false,
+  "source": {
+    "domainTypeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
+    "packageId": "foundation-economy-energy"
+  }
+}
