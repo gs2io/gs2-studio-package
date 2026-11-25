@@ -12,6 +12,7 @@ using UnityEngine.UI;
 
 using GS2Studio.Generated.Quest;
 using GS2Studio.Generated.Energy;
+using GS2Studio.Generated.Progress;
 using GS2Studio.Generated.Runtime;
 
 namespace GS2Studio.Generated.Quest.UI
@@ -33,6 +34,10 @@ namespace GS2Studio.Generated.Quest.UI
         private EnergyHandlerBase[] _energyRowHandlers = System.Array.Empty<EnergyHandlerBase>();
         private bool _energyRowHandlersSubscribed;
         private bool _warnedMissingEnergyRowHandlers;
+        // A keyed type can have one Handler per row on a page; every one above this component, nearest first.
+        private ProgressHandlerBase[] _progressRowHandlers = System.Array.Empty<ProgressHandlerBase>();
+        private bool _progressRowHandlersSubscribed;
+        private bool _warnedMissingProgressRowHandlers;
 
         private void OnEnable()
         {
@@ -66,6 +71,20 @@ namespace GS2Studio.Generated.Quest.UI
                 foreach (var rowHandler in _energyRowHandlers) rowHandler.Updated += OnEnergyRowUpdated;
                 _energyRowHandlersSubscribed = true;
             }
+            if (!_progressRowHandlersSubscribed)
+            {
+                _progressRowHandlers = GetComponentsInParent<ProgressHandlerBase>();
+                if (_progressRowHandlers.Length == 0 && !_warnedMissingProgressRowHandlers)
+                {
+                    _warnedMissingProgressRowHandlers = true;
+                    Debug.LogWarning(
+                        $"{nameof(QuestStartInteractable)} on '{name}': no ProgressHandlerBase in the parent chain; " +
+                        "place one for each row it reads on an ancestor of this component (typically the page root). " +
+                        "Its condition stays unknown until then.", this);
+                }
+                foreach (var rowHandler in _progressRowHandlers) rowHandler.Updated += OnProgressRowUpdated;
+                _progressRowHandlersSubscribed = true;
+            }
             if (_handler.Model != null) OnUpdated(_handler.Model);
         }
 
@@ -86,6 +105,16 @@ namespace GS2Studio.Generated.Quest.UI
                 _energyRowHandlers = System.Array.Empty<EnergyHandlerBase>();
                 _energyRowHandlersSubscribed = false;
             }
+            if (_progressRowHandlersSubscribed)
+            {
+                foreach (var rowHandler in _progressRowHandlers)
+                {
+                    if (rowHandler != null) rowHandler.Updated -= OnProgressRowUpdated;
+                }
+                // The parent chain can change while disabled; resolve it again on the next enable.
+                _progressRowHandlers = System.Array.Empty<ProgressHandlerBase>();
+                _progressRowHandlersSubscribed = false;
+            }
         }
 
         private void ResolveHandler()
@@ -96,13 +125,13 @@ namespace GS2Studio.Generated.Quest.UI
         private void OnUpdated(Quest model)
         {
             // Another type's row that cannot be read leaves the condition unknown; never act on a guess.
-            if (!TryReadEnergyStamina(out var __energyStaminaCurrentValue))
+            if (!TryReadEnergyStamina(out var __energyStaminaCurrentValue) || !TryReadProgressProgress(out var __progressProgressInProgress))
             {
                 ApplyInteractableState(_interactableWhenTrue, false);
                 ApplyInteractableState(_interactableWhenFalse, false);
                 return;
             }
-            bool result = (System.Convert.ToInt64(__energyStaminaCurrentValue, System.Globalization.CultureInfo.InvariantCulture) >= System.Convert.ToInt64(model.StaminaCost, System.Globalization.CultureInfo.InvariantCulture));
+            bool result = ((System.Convert.ToInt64(__energyStaminaCurrentValue, System.Globalization.CultureInfo.InvariantCulture) >= System.Convert.ToInt64(model.StaminaCost, System.Globalization.CultureInfo.InvariantCulture)) && !(((object?)__progressProgressInProgress) switch { null => false, bool __b => __b, string __s => !string.IsNullOrEmpty(__s), int __i => __i != 0, long __l => __l != 0L, float __f => __f != 0f, double __d => __d != 0d, _ => true }));
             ApplyInteractableState(_interactableWhenTrue, result);
             ApplyInteractableState(_interactableWhenFalse, !result);
         }
@@ -118,6 +147,29 @@ namespace GS2Studio.Generated.Quest.UI
         {
             allLoaded = _energyRowHandlers.Length > 0;
             foreach (var rowHandler in _energyRowHandlers)
+            {
+                var model = rowHandler == null ? null : rowHandler.Model;
+                if (model == null)
+                {
+                    allLoaded = false;
+                    continue;
+                }
+                if (string.Equals(((object?)model.Id)?.ToString(), id, StringComparison.Ordinal)) return model;
+            }
+            return null;
+        }
+
+        // Any of these rows can change independently, but applying them still requires the current primary model.
+        private void OnProgressRowUpdated(GS2Studio.Generated.Progress.Progress rowModel)
+        {
+            if (_handler?.Model != null) OnUpdated(_handler.Model);
+        }
+
+        /// <summary>The nearest Handler above this component whose model is the row; null while none holds it.</summary>
+        private GS2Studio.Generated.Progress.Progress? FindProgressRow(string id, out bool allLoaded)
+        {
+            allLoaded = _progressRowHandlers.Length > 0;
+            foreach (var rowHandler in _progressRowHandlers)
             {
                 var model = rowHandler == null ? null : rowHandler.Model;
                 if (model == null)
@@ -159,6 +211,28 @@ namespace GS2Studio.Generated.Quest.UI
                 return false;
             }
             __energyStaminaCurrentValue = row.CurrentValue;
+            return true;
+        }
+
+        private bool _warnedProgressProgressRow;
+
+        /// <summary>Reads row 'progress' once for every value the condition takes from it; false while no Handler above holds the row or a value is absent.</summary>
+        private bool TryReadProgressProgress(out bool __progressProgressInProgress)
+        {
+            __progressProgressInProgress = default;
+            var row = FindProgressRow("progress", out var allLoaded);
+            if (row == null)
+            {
+                // Rows load one by one; only once every Handler above has loaded is a missing row a wiring problem.
+                if (allLoaded && !_warnedProgressProgressRow)
+                {
+                    _warnedProgressProgressRow = true;
+                    Debug.LogWarning(
+                        $"{nameof(QuestStartInteractable)} on '{name}': no ProgressHandlerBase above it holds Progress 'progress'; the condition stays unknown until one does.", this);
+                }
+                return false;
+            }
+            __progressProgressInProgress = row.InProgress;
             return true;
         }
     }
