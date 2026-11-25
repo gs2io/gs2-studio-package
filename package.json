@@ -7,7 +7,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "devDependencies": {
-    "gs2-studio-dsl": "2026.11.10",
+    "gs2-studio-dsl": "2026.11.13",
     "typescript": "5.9.3"
   }
 }
