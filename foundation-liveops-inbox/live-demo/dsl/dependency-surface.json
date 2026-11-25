@@ -26,6 +26,16 @@
           }
         }
       },
+      "generatedHandlers": [
+        "GiftHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {
         "AmountLabel": {
           "kind": "templateLabel",
@@ -117,6 +127,18 @@
             }
           }
         }
+      },
+      "generatedHandlers": [
+        "GlobalMessageHandler",
+        "GlobalMessageListHandler",
+        "GlobalMessageListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction"
+        ],
+        "userData": []
       },
       "uiComponents": {
         "DeliverButton": {
@@ -211,6 +233,15 @@
           "targetActionKey": "Gs2Inbox:Message.ReadMessage",
           "parameters": {}
         }
+      },
+      "generatedHandlers": [
+        "MessageHandler",
+        "MessageListHandler",
+        "MessageListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
       },
       "uiComponents": {
         "OpenButton": {

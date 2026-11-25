@@ -8,6 +8,13 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-ad",
       "canonicalTypeId": "dt_2KV2X0FT1TBFTKT821EBZ1GZSE",
+      "generatedHandlers": [],
+      "mountedBy": {
+        "masterData": [
+          "adReward.Namespace"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "adMobAdUnitIds": "prop_2E144V2D4DR6774190N39P62XT",
@@ -68,6 +75,15 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-ad",
       "canonicalTypeId": "dt_66NWJWN9PWRYYKQ8Z4XC44R9WQ",
+      "generatedHandlers": [
+        "AdViewPointHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": [
+          "adReward.Point"
+        ]
+      },
       "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",

@@ -16,6 +16,16 @@
       ],
       "canonicalPackageId": "micro-economy-login-reward",
       "canonicalTypeId": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y",
+      "generatedHandlers": [
+        "LoginRewardHandler",
+        "LoginRewardListHandler",
+        "LoginRewardListItemHandler",
+        "LoginRewardListByLoginRewardCollectionHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "DayLabel": {
           "kind": "templateLabel",
@@ -180,6 +190,19 @@
             }
           }
         }
+      },
+      "generatedHandlers": [
+        "LoginRewardCollectionHandler",
+        "LoginRewardCollectionListHandler",
+        "LoginRewardCollectionListItemHandler",
+        "LoginRewardCollectionListByScheduleHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction"
+        ],
+        "userData": []
       },
       "uiComponents": {
         "LastReceivedLabel": {

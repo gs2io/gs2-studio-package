@@ -8,6 +8,15 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-liveops-serial-code",
       "canonicalTypeId": "dt_00D031EZFZGQWMWS3BP6K2QWFB",
+      "generatedHandlers": [
+        "SerialCodeCampaignHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "serialKey.CampaignModel"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "enableCampaignCode": "prop_00D031EZFZM4YG8CZFHGS7HMHD",

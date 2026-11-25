@@ -40,6 +40,17 @@
           }
         }
       },
+      "generatedHandlers": [
+        "RankingContestHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction",
+          "transaction.ConsumeAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {
         "FinishContestButton": {
           "kind": "buttonAction",
@@ -91,6 +102,13 @@
       ],
       "canonicalPackageId": "micro-liveops-ranking",
       "canonicalTypeId": "dt_00D031DYK08MQ218VMWRT5X90Q",
+      "generatedHandlers": [
+        "RankingRewardHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "acquireActions": "prop_00D031DYK0FBDNV00N30XJMEBY",

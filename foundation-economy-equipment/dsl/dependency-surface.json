@@ -8,6 +8,19 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-equipment",
       "canonicalTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
+      "generatedHandlers": [
+        "EquipmentHandler",
+        "EquipmentListHandler",
+        "EquipmentListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "inventory.ItemModel"
+        ],
+        "userData": [
+          "inventory.ItemSet"
+        ]
+      },
       "uiComponents": {
         "NameLabel": {
           "kind": "templateLabel",
@@ -95,6 +108,11 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-equipment",
       "canonicalTypeId": "dt_5XY098JXVWPEN0Q0F7QY165JJA",
+      "generatedHandlers": [],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
@@ -123,6 +141,17 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-equipment",
       "canonicalTypeId": "dt_3TNDM19GA01KNCFNQ6SFP3ECB1",
+      "generatedHandlers": [
+        "EquipmentCollectionHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "inventory.InventoryModel"
+        ],
+        "userData": [
+          "inventory.Inventory"
+        ]
+      },
       "uiComponents": {
         "CapacityGauge": {
           "kind": "gauge",

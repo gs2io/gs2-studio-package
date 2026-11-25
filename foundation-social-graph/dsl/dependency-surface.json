@@ -8,6 +8,17 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-social-graph",
       "canonicalTypeId": "dt_08K3FC7FE5YXMPX2JEW2PM0A9C",
+      "generatedHandlers": [
+        "FollowHandler",
+        "FollowListHandler",
+        "FollowListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": [
+          "friend.FollowUser"
+        ]
+      },
       "uiComponents": {},
       "properties": {
         "followerProfile": "prop_73QSS5XZ6NRSZZM9W4XV4JB0F2",
@@ -68,6 +79,17 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-social-graph",
       "canonicalTypeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7",
+      "generatedHandlers": [
+        "FriendHandler",
+        "FriendListHandler",
+        "FriendListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": [
+          "friend.FriendUser"
+        ]
+      },
       "uiComponents": {},
       "properties": {
         "friendProfile": "prop_24MC6NM8NQ2X1W8TPT2T1V69RK",
@@ -128,6 +150,15 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-social-graph",
       "canonicalTypeId": "dt_7MCV69YC0XGRMERDF32JPH1TKT",
+      "generatedHandlers": [
+        "ProfileHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": [
+          "friend.Profile"
+        ]
+      },
       "uiComponents": {},
       "properties": {
         "followerProfile": "prop_759K6DP8VBDS06P0YW25QNEN5N",
@@ -204,6 +235,17 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-social-graph",
       "canonicalTypeId": "dt_0KJDB006NY2GQTXMYTCJ3XKERK",
+      "generatedHandlers": [
+        "ReceiveFriendRequestHandler",
+        "ReceiveFriendRequestListHandler",
+        "ReceiveFriendRequestListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": [
+          "friend.ReceiveFriendRequest"
+        ]
+      },
       "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
@@ -232,6 +274,17 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-social-graph",
       "canonicalTypeId": "dt_6JV3Y0KG2J3C3460P6WD93NW62",
+      "generatedHandlers": [
+        "SendFriendRequestHandler",
+        "SendFriendRequestListHandler",
+        "SendFriendRequestListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": [
+          "friend.SendFriendRequest"
+        ]
+      },
       "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"

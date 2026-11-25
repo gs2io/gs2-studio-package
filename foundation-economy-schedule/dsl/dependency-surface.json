@@ -8,6 +8,19 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-schedule",
       "canonicalTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+      "generatedHandlers": [
+        "ScheduleHandler",
+        "ScheduleListHandler",
+        "ScheduleListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "schedule.Event"
+        ],
+        "userData": [
+          "schedule.Trigger"
+        ]
+      },
       "uiComponents": {
         "AbsoluteActiveToggle": {
           "kind": "activeToggle",
@@ -356,6 +369,17 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-schedule",
       "canonicalTypeId": "dt_7JFGC97Y1569S38ZN3HSK3M4PE",
+      "generatedHandlers": [
+        "TriggerHandler",
+        "TriggerListHandler",
+        "TriggerListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": [
+          "schedule.Trigger"
+        ]
+      },
       "uiComponents": {
         "ExpiresAtValue": {
           "kind": "value",

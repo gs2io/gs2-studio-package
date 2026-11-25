@@ -28,6 +28,18 @@
           }
         }
       },
+      "generatedHandlers": [
+        "EquipmentHandler",
+        "EquipmentListHandler",
+        "EquipmentListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.ConsumeAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {
         "DiscardButton": {
           "kind": "buttonAction",
@@ -141,6 +153,19 @@
           }
         }
       },
+      "generatedHandlers": [
+        "EquipmentCatalogHandler",
+        "EquipmentCatalogListHandler",
+        "EquipmentCatalogListItemHandler",
+        "EquipmentCatalogListByEquipmentHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {
         "NameLabel": {
           "kind": "templateLabel",
@@ -214,6 +239,16 @@
             }
           }
         }
+      },
+      "generatedHandlers": [
+        "EquipmentCollectionHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction"
+        ],
+        "userData": []
       },
       "uiComponents": {
         "CapacityGauge": {

@@ -8,6 +8,19 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-login-reward",
       "canonicalTypeId": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y",
+      "generatedHandlers": [
+        "LoginRewardHandler",
+        "LoginRewardListHandler",
+        "LoginRewardListItemHandler",
+        "LoginRewardListByLoginRewardCollectionHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "loginReward.Reward",
+          "transaction.AcquireAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "acquireActions": "prop_4NM4N1K506P5W7EJPWJZJPPXB4",
@@ -101,6 +114,21 @@
             }
           }
         }
+      },
+      "generatedHandlers": [
+        "LoginRewardCollectionHandler",
+        "LoginRewardCollectionListHandler",
+        "LoginRewardCollectionListItemHandler",
+        "LoginRewardCollectionListByScheduleHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "loginReward.BonusModel",
+          "transaction.ConsumeAction"
+        ],
+        "userData": [
+          "loginReward.ReceiveStatus"
+        ]
       },
       "uiComponents": {},
       "properties": {
@@ -260,6 +288,15 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-schedule",
       "canonicalTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+      "generatedHandlers": [
+        "ScheduleHandler",
+        "ScheduleListHandler",
+        "ScheduleListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "AbsoluteActiveToggle": {
           "kind": "activeToggle",

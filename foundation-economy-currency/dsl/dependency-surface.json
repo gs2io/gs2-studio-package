@@ -10,6 +10,13 @@
       ],
       "canonicalPackageId": "foundation-economy-currency",
       "canonicalTypeId": "dt_2X6G49X3GPEBFY4C5FVR08QQYY",
+      "generatedHandlers": [],
+      "mountedBy": {
+        "masterData": [
+          "money2.Namespace"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "enableFakeReceipt": "prop_3R4QYS0D4H9YBXXNSJX2T04BAQ",
@@ -54,6 +61,17 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-currency",
       "canonicalTypeId": "dt_4NXVXK20XP7PQ57S0Y6RYH6CYA",
+      "generatedHandlers": [
+        "StoreProductHandler",
+        "StoreProductListHandler",
+        "StoreProductListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "money2.StoreContentModel"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "appleAppStoreProductId": "prop_2GHK1DAZ80TETBDER3P5PF6XKA",
@@ -114,6 +132,17 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-currency",
       "canonicalTypeId": "dt_0WCFBJN2Y3V0FG40XBC78MWHM9",
+      "generatedHandlers": [
+        "WalletHandler",
+        "WalletListHandler",
+        "WalletListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": [
+          "money2.Wallet"
+        ]
+      },
       "uiComponents": {
         "FreeBalanceLabel": {
           "kind": "label",

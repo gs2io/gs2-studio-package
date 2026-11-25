@@ -8,6 +8,15 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-social-graph",
       "canonicalTypeId": "dt_08K3FC7FE5YXMPX2JEW2PM0A9C",
+      "generatedHandlers": [
+        "FollowHandler",
+        "FollowListHandler",
+        "FollowListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "FollowerProfileLabel": {
           "kind": "templateLabel",
@@ -79,6 +88,15 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-social-graph",
       "canonicalTypeId": "dt_0ND11HVN4RSZ2NPFM61WMM6ZJ7",
+      "generatedHandlers": [
+        "FriendHandler",
+        "FriendListHandler",
+        "FriendListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "FriendProfileLabel": {
           "kind": "templateLabel",
@@ -150,6 +168,13 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-social-graph",
       "canonicalTypeId": "dt_7MCV69YC0XGRMERDF32JPH1TKT",
+      "generatedHandlers": [
+        "ProfileHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "FollowerProfileLabel": {
           "kind": "templateLabel",
@@ -242,6 +267,15 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-social-graph",
       "canonicalTypeId": "dt_0KJDB006NY2GQTXMYTCJ3XKERK",
+      "generatedHandlers": [
+        "ReceiveFriendRequestHandler",
+        "ReceiveFriendRequestListHandler",
+        "ReceiveFriendRequestListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "IdLabel": {
           "kind": "templateLabel",
@@ -276,6 +310,15 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-social-graph",
       "canonicalTypeId": "dt_6JV3Y0KG2J3C3460P6WD93NW62",
+      "generatedHandlers": [
+        "SendFriendRequestHandler",
+        "SendFriendRequestListHandler",
+        "SendFriendRequestListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "IdLabel": {
           "kind": "templateLabel",

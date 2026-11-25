@@ -10,6 +10,17 @@
       ],
       "canonicalPackageId": "foundation-social-guild",
       "canonicalTypeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
+      "generatedHandlers": [
+        "GuildHandler",
+        "GuildListHandler",
+        "GuildListItemHandler",
+        "GuildListByGuildMasterRoleHandler",
+        "GuildListByGuildMemberDefaultRoleHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "CapacityLabel": {
           "kind": "templateLabel",

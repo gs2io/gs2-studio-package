@@ -11,6 +11,15 @@
       ],
       "canonicalPackageId": "foundation-economy-limit",
       "canonicalTypeId": "dt_00D031CCJC5E77CH6RN2RE661E",
+      "generatedHandlers": [
+        "UsageLimitHandler",
+        "UsageLimitListHandler",
+        "UsageLimitListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "NotWeeklyActiveToggle": {
           "kind": "activeToggle",
@@ -210,6 +219,20 @@
             }
           }
         }
+      },
+      "generatedHandlers": [
+        "UsageLimitCounterHandler",
+        "UsageLimitCounterListHandler",
+        "UsageLimitCounterListItemHandler",
+        "UsageLimitCounterListByLimitHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction",
+          "transaction.ConsumeAction"
+        ],
+        "userData": []
       },
       "uiComponents": {
         "AdUsesUnavailableActiveToggle": {

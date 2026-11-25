@@ -8,6 +8,19 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-energy",
       "canonicalTypeId": "dt_6Q9B985K9SXB6NC60YCTW3PKBZ",
+      "generatedHandlers": [
+        "EnergyHandler",
+        "EnergyListHandler",
+        "EnergyListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "stamina.StaminaModel"
+        ],
+        "userData": [
+          "stamina.Stamina"
+        ]
+      },
       "uiComponents": {
         "FullActiveToggle": {
           "kind": "activeToggle",

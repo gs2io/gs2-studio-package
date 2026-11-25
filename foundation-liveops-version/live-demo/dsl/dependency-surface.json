@@ -11,6 +11,15 @@
       ],
       "canonicalPackageId": "foundation-liveops-version",
       "canonicalTypeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9",
+      "generatedHandlers": [
+        "AgreementVersionHandler",
+        "AgreementVersionListHandler",
+        "AgreementVersionListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "RuleLabel": {
           "kind": "templateLabel",

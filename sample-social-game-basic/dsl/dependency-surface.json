@@ -30,6 +30,16 @@
           }
         }
       },
+      "generatedHandlers": [
+        "GachaHandler",
+        "GachaListHandler",
+        "GachaListItemHandler",
+        "GachaListByScheduleHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "consumeActions": "prop_641SVQJRC0GWZ43QNEPB429MND",
@@ -122,6 +132,16 @@
       ],
       "canonicalPackageId": "micro-economy-login-reward",
       "canonicalTypeId": "dt_0XRVJ16KE0KT37ECHDS8ZPF57Y",
+      "generatedHandlers": [
+        "LoginRewardHandler",
+        "LoginRewardListHandler",
+        "LoginRewardListItemHandler",
+        "LoginRewardListByLoginRewardCollectionHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "acquireActions": "prop_4NM4N1K506P5W7EJPWJZJPPXB4",
@@ -202,6 +222,11 @@
       ],
       "canonicalPackageId": "sample-social-game-basic",
       "canonicalTypeId": "dt_3VQCE62MXAX9SNKQ8K0PZW76BE",
+      "generatedHandlers": [],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "iconAddress": "prop_0K2GDNB2Z9R2MAY48RXEE0ZJQN",

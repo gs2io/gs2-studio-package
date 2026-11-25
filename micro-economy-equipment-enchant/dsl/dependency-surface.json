@@ -8,6 +8,18 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-equipment",
       "canonicalTypeId": "dt_61Z29G730GMGBVA3GGTCBBX3A3",
+      "generatedHandlers": [
+        "EquipmentHandler",
+        "EquipmentListHandler",
+        "EquipmentListItemHandler",
+        "EquipmentListByEnchantHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": [
+          "enchant.RarityParameterStatus"
+        ]
+      },
       "uiComponents": {
         "NameLabel": {
           "kind": "templateLabel",
@@ -127,6 +139,17 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-equipment-enchant",
       "canonicalTypeId": "dt_00D03217GRKX0AV27J248EX89N",
+      "generatedHandlers": [
+        "EquipmentEnchantHandler",
+        "EquipmentEnchantListHandler",
+        "EquipmentEnchantListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "enchant.RarityParameterModel"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -173,6 +196,15 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-equipment-enchant",
       "canonicalTypeId": "dt_00D03217GRQVEAJ6KQWDNC0X5C",
+      "generatedHandlers": [
+        "EquipmentEnchantOptionHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "enchant.RarityParameterValueModel"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "enchant": "prop_00D03217GRGMDSEFAQS5E3A4B2",
@@ -265,6 +297,15 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-equipment-enchant",
       "canonicalTypeId": "dt_00D03217GRN3Z01B1EQB1GF0EE",
+      "generatedHandlers": [
+        "EquipmentEnchantSlotChanceHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "enchant.RarityParameterCountModel"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "count": "prop_00D03217GRPNY6G1Z1K6JD36ZX",
@@ -343,6 +384,11 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-equipment-enchant",
       "canonicalTypeId": "dt_00D03217GRGZC79DA19NWHFSGD",
+      "generatedHandlers": [],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",

@@ -13,6 +13,15 @@
       ],
       "canonicalPackageId": "micro-economy-skill-tree",
       "canonicalTypeId": "dt_00D0321TWK66MR7GWMWA3MCTP1",
+      "generatedHandlers": [
+        "SkillNodeHandler",
+        "SkillNodeListHandler",
+        "SkillNodeListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "ReleasedActiveToggle": {
           "kind": "activeToggle",

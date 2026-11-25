@@ -8,6 +8,21 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-social-guild",
       "canonicalTypeId": "dt_00D031EHJKRH5CWDQRFS6291KY",
+      "generatedHandlers": [
+        "GuildHandler",
+        "GuildListHandler",
+        "GuildListItemHandler",
+        "GuildListByGuildMasterRoleHandler",
+        "GuildListByGuildMemberDefaultRoleHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "guild.GuildModel"
+        ],
+        "userData": [
+          "guild.JoinedGuild"
+        ]
+      },
       "uiComponents": {},
       "properties": {
         "defaultMaximumMemberCount": "prop_00D031EHJKS5RXCVAFMNT3SG8A",
@@ -192,6 +207,15 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-social-guild",
       "canonicalTypeId": "dt_00D031EHJKYH677VNXVWGBA2D0",
+      "generatedHandlers": [
+        "GuildRoleHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "guild.RoleModel"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",

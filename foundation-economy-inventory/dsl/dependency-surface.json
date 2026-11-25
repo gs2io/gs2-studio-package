@@ -8,6 +8,19 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-inventory",
       "canonicalTypeId": "dt_47E751540GQRMAWTXYFT9376WH",
+      "generatedHandlers": [
+        "ItemHandler",
+        "ItemListHandler",
+        "ItemListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "inventory.SimpleItemModel"
+        ],
+        "userData": [
+          "inventory.SimpleItem"
+        ]
+      },
       "uiComponents": {
         "CountValue": {
           "kind": "value",

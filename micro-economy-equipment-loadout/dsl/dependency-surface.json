@@ -8,6 +8,17 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+      "generatedHandlers": [
+        "CharacterHandler",
+        "CharacterListHandler",
+        "CharacterListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": [
+          "formation.PropertyForm"
+        ]
+      },
       "uiComponents": {
         "ExperienceGauge": {
           "kind": "gauge",
@@ -187,6 +198,15 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-equipment-loadout",
       "canonicalTypeId": "dt_00D033FNASFGZWK2X333SXXRXM",
+      "generatedHandlers": [
+        "EquipmentSlotHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "formation.SlotModel"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -231,6 +251,11 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-equipment-loadout",
       "canonicalTypeId": "dt_00D033FNASFTV29D7YF0NEPDQD",
+      "generatedHandlers": [],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "equipment": "prop_00D033FNAS8DNWPTTNV21SG9XF",

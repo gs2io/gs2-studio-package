@@ -8,6 +8,16 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-idle",
       "canonicalTypeId": "dt_10G0BN3DZ2CDAAN4ZEG75WD4WQ",
+      "generatedHandlers": [
+        "IdleRewardHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "idle.AcquireActionList",
+          "transaction.AcquireAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "acquireActions": "prop_00D05P2SE3WMNG5C27EG74BM38",
@@ -62,6 +72,17 @@
           "targetActionKey": "Gs2Idle:CategoryModel.Receive",
           "parameters": {}
         }
+      },
+      "generatedHandlers": [
+        "IdleStatusHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "idle.CategoryModel"
+        ],
+        "userData": [
+          "idle.Status"
+        ]
       },
       "uiComponents": {},
       "properties": {

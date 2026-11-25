@@ -24,6 +24,18 @@
           "parameters": {}
         }
       },
+      "generatedHandlers": [
+        "CharacterHandler",
+        "CharacterListHandler",
+        "CharacterListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {
         "ExperienceGauge": {
           "kind": "gauge",
@@ -195,6 +207,13 @@
       ],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW",
+      "generatedHandlers": [
+        "CharacterCollectionHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "NoneYetLabel": {
           "kind": "label",
@@ -331,6 +350,19 @@
             }
           }
         }
+      },
+      "generatedHandlers": [
+        "CharacterRecruitHandler",
+        "CharacterRecruitListHandler",
+        "CharacterRecruitListItemHandler",
+        "CharacterRecruitListByCharacterHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction"
+        ],
+        "userData": []
       },
       "uiComponents": {
         "CharacterLabel": {

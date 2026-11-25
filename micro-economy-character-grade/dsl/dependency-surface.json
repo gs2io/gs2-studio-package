@@ -8,6 +8,17 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+      "generatedHandlers": [
+        "CharacterHandler",
+        "CharacterListHandler",
+        "CharacterListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": [
+          "grade.Status"
+        ]
+      },
       "uiComponents": {
         "ExperienceGauge": {
           "kind": "gauge",
@@ -189,6 +200,15 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-character-grade",
       "canonicalTypeId": "dt_00D0320HQ4JPTS5BMVDRD7QZH7",
+      "generatedHandlers": [
+        "CharacterGradeStepHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "grade.GradeEntryModel"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "gradeUpPropertyIdRegex": "prop_00D0320HQ4N8QC4SDN75PFNFSF",

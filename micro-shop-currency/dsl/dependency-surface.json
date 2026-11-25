@@ -12,6 +12,15 @@
       ],
       "canonicalPackageId": "micro-shop-currency",
       "canonicalTypeId": "dt_5X0WV26CPKD17193EPDQD24EP3",
+      "generatedHandlers": [
+        "CurrencyTypeHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "showcase.Showcase"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
@@ -73,6 +82,19 @@
             }
           }
         }
+      },
+      "generatedHandlers": [
+        "StoreProductHandler",
+        "StoreProductListHandler",
+        "StoreProductListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "showcase.SalesItem",
+          "transaction.AcquireAction",
+          "transaction.ConsumeAction"
+        ],
+        "userData": []
       },
       "uiComponents": {
         "AppleAppStoreProductIdValue": {

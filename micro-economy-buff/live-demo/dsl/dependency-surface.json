@@ -10,6 +10,16 @@
       ],
       "canonicalPackageId": "micro-economy-buff",
       "canonicalTypeId": "dt_00D0322BN7GCTNB9EDAVY1X845",
+      "generatedHandlers": [
+        "BuffHandler",
+        "BuffListHandler",
+        "BuffListItemHandler",
+        "BuffListByScheduleHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "conditionGrn": "prop_00D0W9XTYQ31RW0YT593HMCK8H",
@@ -229,6 +239,17 @@
             }
           }
         }
+      },
+      "generatedHandlers": [
+        "BuffCampaignHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction",
+          "transaction.ConsumeAction"
+        ],
+        "userData": []
       },
       "uiComponents": {
         "EndCampaignButton": {

@@ -10,6 +10,18 @@
       ],
       "canonicalPackageId": "micro-liveops-serial-code-demo",
       "canonicalTypeId": "dt_00D0WPXGH8DX6MATYR4SWNMNKW",
+      "generatedHandlers": [
+        "SerialCodeRedemptionHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "limit.LimitModel",
+          "transaction.AcquireAction",
+          "transaction.ConsumeAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {
         "RuleLabel": {
           "kind": "templateLabel",

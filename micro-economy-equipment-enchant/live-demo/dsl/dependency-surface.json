@@ -28,6 +28,20 @@
           "parameters": {}
         }
       },
+      "generatedHandlers": [
+        "EquipmentHandler",
+        "EquipmentListHandler",
+        "EquipmentListItemHandler",
+        "EquipmentListByEnchantHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction",
+          "transaction.ConsumeAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {
         "AddBonusButton": {
           "kind": "buttonAction",
@@ -129,6 +143,15 @@
       ],
       "canonicalPackageId": "micro-economy-equipment-enchant",
       "canonicalTypeId": "dt_00D03217GRKX0AV27J248EX89N",
+      "generatedHandlers": [
+        "EquipmentEnchantHandler",
+        "EquipmentEnchantListHandler",
+        "EquipmentEnchantListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "RuleLabel": {
           "kind": "templateLabel",

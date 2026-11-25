@@ -28,6 +28,18 @@
           "parameters": {}
         }
       },
+      "generatedHandlers": [
+        "CharacterHandler",
+        "CharacterListHandler",
+        "CharacterListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {
         "ExperienceGauge": {
           "kind": "gauge",

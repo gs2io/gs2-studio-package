@@ -38,6 +38,15 @@
           }
         }
       },
+      "generatedHandlers": [
+        "EnergyHandler",
+        "EnergyListHandler",
+        "EnergyListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "FullActiveToggle": {
           "kind": "activeToggle",
@@ -259,6 +268,13 @@
           }
         }
       },
+      "generatedHandlers": [
+        "ProgressHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "CompleteButton": {
           "kind": "buttonAction",
@@ -392,6 +408,16 @@
             }
           }
         }
+      },
+      "generatedHandlers": [
+        "QuestHandler",
+        "QuestListHandler",
+        "QuestListItemHandler",
+        "QuestListByCollectionHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
       },
       "uiComponents": {
         "BriefLabel": {

@@ -30,6 +30,16 @@
           }
         }
       },
+      "generatedHandlers": [
+        "GachaHandler",
+        "GachaListHandler",
+        "GachaListItemHandler",
+        "GachaListByScheduleHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "BuyButton": {
           "kind": "buttonAction",
@@ -135,6 +145,15 @@
             }
           }
         }
+      },
+      "generatedHandlers": [
+        "StoreProductHandler",
+        "StoreProductListHandler",
+        "StoreProductListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
       },
       "uiComponents": {
         "AppleAppStoreProductIdValue": {

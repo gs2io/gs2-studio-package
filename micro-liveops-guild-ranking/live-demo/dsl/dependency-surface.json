@@ -10,6 +10,15 @@
       ],
       "canonicalPackageId": "micro-liveops-guild-ranking",
       "canonicalTypeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
+      "generatedHandlers": [
+        "GuildRankingHandler",
+        "GuildRankingListHandler",
+        "GuildRankingListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "RuleLabel": {
           "kind": "templateLabel",
@@ -146,6 +155,13 @@
       ],
       "canonicalPackageId": "micro-liveops-guild-ranking",
       "canonicalTypeId": "dt_00D033H0GPVEHE0CAY94WAKT63",
+      "generatedHandlers": [
+        "GuildRankingRewardHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "acquireActions": "prop_00D033H0GPSX5TQB69ST80YSQG",

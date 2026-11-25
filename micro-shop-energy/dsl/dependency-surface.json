@@ -8,6 +8,20 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-shop-energy",
       "canonicalTypeId": "dt_2SJK4B40HKKNMMEXDSYAGF78QE",
+      "generatedHandlers": [
+        "EnergyProductHandler",
+        "EnergyProductListHandler",
+        "EnergyProductListItemHandler",
+        "EnergyProductListByEnergyHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction",
+          "transaction.ConsumeAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "consumeActions": "prop_1TVQ7F0MKR9R2QQCXBW07X78X6",

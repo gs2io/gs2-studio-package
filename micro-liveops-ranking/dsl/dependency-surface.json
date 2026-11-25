@@ -8,6 +8,19 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-liveops-ranking",
       "canonicalTypeId": "dt_00D031DYK0AVE6F96GF6BCQBDY",
+      "generatedHandlers": [
+        "RankingHandler",
+        "RankingListHandler",
+        "RankingListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "ranking2.GlobalRankingModel"
+        ],
+        "userData": [
+          "ranking2.GlobalRankingScore"
+        ]
+      },
       "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -134,6 +147,16 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-liveops-ranking",
       "canonicalTypeId": "dt_00D031DYK08MQ218VMWRT5X90Q",
+      "generatedHandlers": [
+        "RankingRewardHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "ranking2.RankingReward",
+          "transaction.AcquireAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "acquireActions": "prop_00D031DYK0FBDNV00N30XJMEBY",

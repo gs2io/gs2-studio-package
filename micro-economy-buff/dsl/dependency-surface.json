@@ -8,6 +8,21 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-buff",
       "canonicalTypeId": "dt_00D0322BN7GCTNB9EDAVY1X845",
+      "generatedHandlers": [
+        "BuffHandler",
+        "BuffListHandler",
+        "BuffListItemHandler",
+        "BuffListByScheduleHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "buff.BuffEntryModel",
+          "buff.BuffTargetAction",
+          "buff.BuffTargetGrn",
+          "buff.BuffTargetModel"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "conditionGrn": "prop_00D0W9XTYQ31RW0YT593HMCK8H",

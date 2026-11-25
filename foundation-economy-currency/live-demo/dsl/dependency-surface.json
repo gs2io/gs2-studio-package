@@ -26,6 +26,16 @@
           }
         }
       },
+      "generatedHandlers": [
+        "FreeDepositHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {
         "CountLabel": {
           "kind": "templateLabel",
@@ -91,6 +101,16 @@
             }
           }
         }
+      },
+      "generatedHandlers": [
+        "PaidDepositHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction"
+        ],
+        "userData": []
       },
       "uiComponents": {
         "CountLabel": {

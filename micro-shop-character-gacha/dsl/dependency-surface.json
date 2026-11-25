@@ -8,6 +8,16 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-shop-character-gacha",
       "canonicalTypeId": "dt_7PX81V3CA4FE94QNH49NDZ8R19",
+      "generatedHandlers": [
+        "CharacterRateHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "lottery.Prize",
+          "transaction.AcquireAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "character": "prop_2JPPK6P7F94GT0KKPVM3JFZPSQ",
@@ -104,6 +114,22 @@
           }
         }
       },
+      "generatedHandlers": [
+        "GachaHandler",
+        "GachaListHandler",
+        "GachaListItemHandler",
+        "GachaListByScheduleHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "lottery.LotteryModel",
+          "lottery.PrizeTable",
+          "showcase.DisplayItem",
+          "showcase.SalesItem",
+          "transaction.ConsumeAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "consumeActions": "prop_641SVQJRC0GWZ43QNEPB429MND",
@@ -164,6 +190,15 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-shop-character-gacha",
       "canonicalTypeId": "dt_479NFNV95H92HYQE8252JBRZ9Z",
+      "generatedHandlers": [
+        "GachaRarityHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "lottery.PrizeTable"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ"
@@ -192,6 +227,15 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-shop-character-gacha",
       "canonicalTypeId": "dt_0RM8RSFWGRCH1J86N5K65VV012",
+      "generatedHandlers": [
+        "GachaRarityRateHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "lottery.Prize"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "gacha": "prop_0FB9QM529M8HJWECVFGHK5ETSP",

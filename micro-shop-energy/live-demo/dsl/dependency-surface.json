@@ -28,6 +28,20 @@
           }
         }
       },
+      "generatedHandlers": [
+        "EnergyProductHandler",
+        "EnergyProductListHandler",
+        "EnergyProductListItemHandler",
+        "EnergyProductListByEnergyHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction",
+          "transaction.ConsumeAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {
         "BuyButton": {
           "kind": "buttonAction",

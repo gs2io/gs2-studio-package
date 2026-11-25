@@ -8,6 +8,19 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-shop-subscription",
       "canonicalTypeId": "dt_00D033GGSVFVRGCZ20B4GJXGF5",
+      "generatedHandlers": [
+        "StoreSubscriptionHandler",
+        "StoreSubscriptionListHandler",
+        "StoreSubscriptionListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "money2.StoreSubscriptionContentModel"
+        ],
+        "userData": [
+          "money2.SubscriptionStatus"
+        ]
+      },
       "uiComponents": {},
       "properties": {
         "appleSubscriptionGroupIdentifier": "prop_00D033GGSV9BP263BX1BS3S5V5",

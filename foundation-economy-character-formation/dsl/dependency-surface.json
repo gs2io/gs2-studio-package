@@ -8,6 +8,17 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character-formation",
       "canonicalTypeId": "dt_0FMV8QX02378K8GPK5KKAA9CRN",
+      "generatedHandlers": [
+        "CharacterFormationHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "formation.MoldModel"
+        ],
+        "userData": [
+          "formation.Mold"
+        ]
+      },
       "uiComponents": {},
       "properties": {
         "currentSaveArea": "prop_7HNF20BCN1PY27WR4A2XSHQFB1",
@@ -90,6 +101,17 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character-formation",
       "canonicalTypeId": "dt_4QJDBK8QQK6C0CFDNRCG7AF5ZF",
+      "generatedHandlers": [
+        "CharacterFormationFormHandler",
+        "CharacterFormationFormListHandler",
+        "CharacterFormationFormListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": [
+          "formation.Form"
+        ]
+      },
       "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -134,6 +156,11 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character-formation",
       "canonicalTypeId": "dt_57YG14JB1Z099GPEMY0ZB6K0H9",
+      "generatedHandlers": [],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -178,6 +205,15 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character-formation",
       "canonicalTypeId": "dt_7SRX458Z4F4WB25KSR94EA8BHG",
+      "generatedHandlers": [
+        "CharacterFormationSlotHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "formation.SlotModel"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",

@@ -29,6 +29,17 @@
           }
         }
       },
+      "generatedHandlers": [
+        "MissionHandler",
+        "MissionListHandler",
+        "MissionListItemHandler",
+        "MissionListByMissionCollectionHandler",
+        "MissionListByCounterHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "BriefLabel": {
           "kind": "templateLabel",
@@ -225,6 +236,18 @@
             }
           }
         }
+      },
+      "generatedHandlers": [
+        "MissionCounterHandler",
+        "MissionCounterListHandler",
+        "MissionCounterListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction"
+        ],
+        "userData": []
       },
       "uiComponents": {
         "AdvanceButton": {

@@ -42,6 +42,15 @@
           }
         }
       },
+      "generatedHandlers": [
+        "StoreProductHandler",
+        "StoreProductListHandler",
+        "StoreProductListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "AppleAppStoreProductIdValue": {
           "kind": "value",

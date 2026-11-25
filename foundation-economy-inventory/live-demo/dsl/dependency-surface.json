@@ -42,6 +42,19 @@
           }
         }
       },
+      "generatedHandlers": [
+        "ItemHandler",
+        "ItemListHandler",
+        "ItemListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction",
+          "transaction.ConsumeAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {
         "CountValue": {
           "kind": "value",

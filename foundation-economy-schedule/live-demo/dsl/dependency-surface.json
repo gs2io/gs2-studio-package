@@ -14,6 +14,15 @@
       ],
       "canonicalPackageId": "foundation-economy-schedule",
       "canonicalTypeId": "dt_19DA4DB8PDFYRFX34P95AGJYKV",
+      "generatedHandlers": [
+        "ScheduleHandler",
+        "ScheduleListHandler",
+        "ScheduleListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "AbsoluteActiveToggle": {
           "kind": "activeToggle",
@@ -409,6 +418,19 @@
           }
         }
       },
+      "generatedHandlers": [
+        "TriggerHandler",
+        "TriggerListHandler",
+        "TriggerListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction",
+          "transaction.ConsumeAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {
         "ClearButton": {
           "kind": "buttonAction",
@@ -545,6 +567,19 @@
             }
           }
         }
+      },
+      "generatedHandlers": [
+        "TriggerPullHandler",
+        "TriggerPullListHandler",
+        "TriggerPullListItemHandler",
+        "TriggerPullListByTriggerHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction"
+        ],
+        "userData": []
       },
       "uiComponents": {
         "NameLabel": {

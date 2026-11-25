@@ -8,6 +8,19 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+      "generatedHandlers": [
+        "CharacterHandler",
+        "CharacterListHandler",
+        "CharacterListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "dictionary.EntryModel"
+        ],
+        "userData": [
+          "dictionary.Entry"
+        ]
+      },
       "uiComponents": {
         "AcquiredActiveToggle": {
           "kind": "activeToggle",

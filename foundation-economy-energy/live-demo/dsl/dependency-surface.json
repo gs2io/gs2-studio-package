@@ -40,6 +40,19 @@
           }
         }
       },
+      "generatedHandlers": [
+        "EnergyHandler",
+        "EnergyListHandler",
+        "EnergyListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction",
+          "transaction.ConsumeAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {
         "FullActiveToggle": {
           "kind": "activeToggle",

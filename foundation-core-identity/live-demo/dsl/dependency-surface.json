@@ -8,6 +8,15 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-core-identity",
       "canonicalTypeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5",
+      "generatedHandlers": [
+        "TransferCodeHandler",
+        "TransferCodeListHandler",
+        "TransferCodeListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {
         "IdentifierLabel": {
           "kind": "templateLabel",

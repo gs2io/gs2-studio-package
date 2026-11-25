@@ -8,6 +8,17 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+      "generatedHandlers": [
+        "CharacterHandler",
+        "CharacterListHandler",
+        "CharacterListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": [
+          "skillTree.Status"
+        ]
+      },
       "uiComponents": {
         "ExperienceGauge": {
           "kind": "gauge",
@@ -187,6 +198,20 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-skill-tree",
       "canonicalTypeId": "dt_00D0321TWK66MR7GWMWA3MCTP1",
+      "generatedHandlers": [
+        "SkillNodeHandler",
+        "SkillNodeListHandler",
+        "SkillNodeListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "skillTree.NodeModel",
+          "transaction.ConsumeAction"
+        ],
+        "userData": [
+          "skillTree.Status"
+        ]
+      },
       "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",

@@ -37,6 +37,18 @@
           "parameters": {}
         }
       },
+      "generatedHandlers": [
+        "CharacterHandler",
+        "CharacterListHandler",
+        "CharacterListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {
         "EnhanceWithElixirButton": {
           "kind": "buttonAction",
@@ -236,6 +248,18 @@
             }
           }
         }
+      },
+      "generatedHandlers": [
+        "CharacterEnhanceMaterialHandler",
+        "CharacterEnhanceMaterialListHandler",
+        "CharacterEnhanceMaterialListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction"
+        ],
+        "userData": []
       },
       "uiComponents": {
         "GetButton": {

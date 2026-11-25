@@ -8,6 +8,19 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-liveops-guild-ranking",
       "canonicalTypeId": "dt_00D033H0GPZ4TRESQBZZ7BWNZT",
+      "generatedHandlers": [
+        "GuildRankingHandler",
+        "GuildRankingListHandler",
+        "GuildRankingListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "ranking2.ClusterRankingModel"
+        ],
+        "userData": [
+          "ranking2.ClusterRankingScore"
+        ]
+      },
       "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -134,6 +147,16 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-liveops-guild-ranking",
       "canonicalTypeId": "dt_00D033H0GPVEHE0CAY94WAKT63",
+      "generatedHandlers": [
+        "GuildRankingRewardHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "ranking2.RankingReward",
+          "transaction.AcquireAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "acquireActions": "prop_00D033H0GPSX5TQB69ST80YSQG",

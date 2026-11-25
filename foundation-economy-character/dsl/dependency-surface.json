@@ -8,6 +8,20 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_64PCJ4KXWQBQ45VF7D5MTQ017H",
+      "generatedHandlers": [
+        "CharacterHandler",
+        "CharacterListHandler",
+        "CharacterListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "inventory.ItemModel"
+        ],
+        "userData": [
+          "experience.Status",
+          "inventory.ItemSet"
+        ]
+      },
       "uiComponents": {
         "ExperienceGauge": {
           "kind": "gauge",
@@ -171,6 +185,17 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_7Y1XJG71J0MF9ZVZC2VH2Y3RSW",
+      "generatedHandlers": [
+        "CharacterCollectionHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "inventory.InventoryModel"
+        ],
+        "userData": [
+          "inventory.Inventory"
+        ]
+      },
       "uiComponents": {},
       "properties": {
         "currentCpacity": "prop_74G2303CD8WVN5H4711968MX05",
@@ -271,6 +296,16 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-economy-character",
       "canonicalTypeId": "dt_4AQV64H9SJWBF3YTRJ5DZ1SZG0",
+      "generatedHandlers": [
+        "CharacterExperienceHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "experience.ExperienceModel",
+          "experience.Threshold"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "defaultLevelCap": "prop_2RQX4HDJCJDYTZYM4B9J09JZ9Z",

@@ -8,6 +8,19 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-liveops-version",
       "canonicalTypeId": "dt_4MHCV9DJQBQNBMG4QK6Z6XJRW9",
+      "generatedHandlers": [
+        "AgreementVersionHandler",
+        "AgreementVersionListHandler",
+        "AgreementVersionListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "version.VersionModel"
+        ],
+        "userData": [
+          "version.AcceptVersion"
+        ]
+      },
       "uiComponents": {},
       "properties": {
         "acceptedMajor": "prop_00D05Q8M1NSNSYDW517S8FBNB3",
@@ -276,6 +289,17 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-liveops-version",
       "canonicalTypeId": "dt_0TC4B3HRAFXEXNCK7RN28GDRRM",
+      "generatedHandlers": [
+        "EmbeddedVersionHandler",
+        "EmbeddedVersionListHandler",
+        "EmbeddedVersionListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "version.VersionModel"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "errorMajor": "prop_0ZP0B813EK60XZBRG80Q1FSRXN",
@@ -400,6 +424,13 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-liveops-version",
       "canonicalTypeId": "dt_00D0WRJ0XVF04XYTZ7SCR93FGH",
+      "generatedHandlers": [],
+      "mountedBy": {
+        "masterData": [
+          "version.Namespace"
+        ],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "assumeUserId": "prop_00D0WRJ0XVBVDA97KMXC76V58C",

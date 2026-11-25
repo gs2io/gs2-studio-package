@@ -11,6 +11,17 @@
       ],
       "canonicalPackageId": "foundation-core-identity",
       "canonicalTypeId": "dt_0EKVVXM5E9CF5NK45FPRJVPXD4",
+      "generatedHandlers": [
+        "TakeOverSettingHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "account.TakeOverTypeModel"
+        ],
+        "userData": [
+          "account.TakeOver"
+        ]
+      },
       "uiComponents": {},
       "properties": {
         "appleKeyId": "prop_6SSER4P8KCWTCGCEHA41KMASPV",
@@ -183,6 +194,17 @@
       "shippedRowIds": [],
       "canonicalPackageId": "foundation-core-identity",
       "canonicalTypeId": "dt_00D0XSWNPHPAJEJYNYDWVGREE5",
+      "generatedHandlers": [
+        "TransferCodeHandler",
+        "TransferCodeListHandler",
+        "TransferCodeListItemHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": [
+          "account.TakeOver"
+        ]
+      },
       "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",

@@ -28,6 +28,15 @@
           }
         }
       },
+      "generatedHandlers": [
+        "ProgressHandler"
+      ],
+      "mountedBy": {
+        "masterData": [],
+        "userData": [
+          "quest.Progress"
+        ]
+      },
       "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -120,6 +129,11 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-quest",
       "canonicalTypeId": "dt_0DG28CJ0D7BAHETYKX56H5NG65",
+      "generatedHandlers": [],
+      "mountedBy": {
+        "masterData": [],
+        "userData": []
+      },
       "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",
@@ -197,6 +211,20 @@
             }
           }
         }
+      },
+      "generatedHandlers": [
+        "QuestHandler",
+        "QuestListHandler",
+        "QuestListItemHandler",
+        "QuestListByCollectionHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "quest.QuestModel",
+          "transaction.AcquireAction",
+          "transaction.ConsumeAction"
+        ],
+        "userData": []
       },
       "uiComponents": {},
       "properties": {
@@ -322,6 +350,20 @@
       "shippedRowIds": [],
       "canonicalPackageId": "micro-economy-quest",
       "canonicalTypeId": "dt_24W5SDQ24VS1902R1MMWXSNVT9",
+      "generatedHandlers": [
+        "QuestCollectionHandler",
+        "QuestCollectionListHandler",
+        "QuestCollectionListItemHandler",
+        "QuestCollectionListByScheduleHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "quest.QuestGroupModel"
+        ],
+        "userData": [
+          "quest.CompletedQuestList"
+        ]
+      },
       "uiComponents": {},
       "properties": {
         "id": "prop_7ZZZZZZZZZZZZZZZZZZZZZZZZZ",

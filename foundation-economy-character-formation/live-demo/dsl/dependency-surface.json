@@ -26,6 +26,16 @@
           }
         }
       },
+      "generatedHandlers": [
+        "CharacterFormationHandler"
+      ],
+      "mountedBy": {
+        "masterData": [
+          "exchange.RateModel",
+          "transaction.AcquireAction"
+        ],
+        "userData": []
+      },
       "uiComponents": {
         "ExpandButton": {
           "kind": "buttonAction",
