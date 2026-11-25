@@ -143,6 +143,12 @@
         "targetActionName": {
           "type": "string",
           "requirement": "conditional",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "targetType",
+            "value": "action"
+          },
+          "requiredWhenMet": true,
           "bindingHint": "masterData",
           "display": {
             "en": {
@@ -173,6 +179,12 @@
         "targetModelName": {
           "type": "string",
           "requirement": "conditional",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "targetType",
+            "value": "model"
+          },
+          "requiredWhenMet": true,
           "bindingHint": "masterData",
           "display": {
             "en": {

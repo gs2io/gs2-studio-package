@@ -82,6 +82,12 @@
         "activeDays": {
           "type": "int32",
           "requirement": "conditional",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "repeatType",
+            "value": "custom"
+          },
+          "requiredWhenMet": true,
           "bindingHint": "masterData",
           "display": {
             "en": {
@@ -99,6 +105,12 @@
         "anchorTimestamp": {
           "type": "timestamp",
           "requirement": "conditional",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "repeatType",
+            "value": "custom"
+          },
+          "requiredWhenMet": true,
           "bindingHint": "masterData",
           "display": {
             "en": {
@@ -114,6 +126,12 @@
         "beginDayOfMonth": {
           "type": "int32",
           "requirement": "conditional",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "repeatType",
+            "value": "monthly"
+          },
+          "requiredWhenMet": true,
           "bindingHint": "masterData",
           "display": {
             "en": {
@@ -131,6 +149,12 @@
         "beginDayOfWeek": {
           "type": "enum<sunday|monday|tuesday|wednesday|thursday|friday|saturday>",
           "requirement": "conditional",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "repeatType",
+            "value": "weekly"
+          },
+          "requiredWhenMet": true,
           "bindingHint": "masterData",
           "display": {
             "en": {
@@ -146,6 +170,27 @@
         "beginHour": {
           "type": "int32",
           "requirement": "conditional",
+          "condition": {
+            "kind": "or",
+            "children": [
+              {
+                "kind": "eq",
+                "propertyName": "repeatType",
+                "value": "daily"
+              },
+              {
+                "kind": "eq",
+                "propertyName": "repeatType",
+                "value": "weekly"
+              },
+              {
+                "kind": "eq",
+                "propertyName": "repeatType",
+                "value": "monthly"
+              }
+            ]
+          },
+          "requiredWhenMet": true,
           "bindingHint": "masterData",
           "display": {
             "en": {
@@ -163,6 +208,12 @@
         "endAt": {
           "type": "timestamp",
           "requirement": "conditional",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "scheduleType",
+            "value": "absolute"
+          },
+          "requiredWhenMet": true,
           "bindingHint": "masterData",
           "display": {
             "en": {
@@ -178,6 +229,12 @@
         "endDayOfMonth": {
           "type": "int32",
           "requirement": "conditional",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "repeatType",
+            "value": "monthly"
+          },
+          "requiredWhenMet": true,
           "bindingHint": "masterData",
           "display": {
             "en": {
@@ -195,6 +252,12 @@
         "endDayOfWeek": {
           "type": "enum<sunday|monday|tuesday|wednesday|thursday|friday|saturday>",
           "requirement": "conditional",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "repeatType",
+            "value": "weekly"
+          },
+          "requiredWhenMet": true,
           "bindingHint": "masterData",
           "display": {
             "en": {
@@ -210,6 +273,27 @@
         "endHour": {
           "type": "int32",
           "requirement": "conditional",
+          "condition": {
+            "kind": "or",
+            "children": [
+              {
+                "kind": "eq",
+                "propertyName": "repeatType",
+                "value": "daily"
+              },
+              {
+                "kind": "eq",
+                "propertyName": "repeatType",
+                "value": "weekly"
+              },
+              {
+                "kind": "eq",
+                "propertyName": "repeatType",
+                "value": "monthly"
+              }
+            ]
+          },
+          "requiredWhenMet": true,
           "bindingHint": "masterData",
           "display": {
             "en": {
@@ -242,6 +326,12 @@
         "inactiveDays": {
           "type": "int32",
           "requirement": "conditional",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "repeatType",
+            "value": "custom"
+          },
+          "requiredWhenMet": true,
           "bindingHint": "masterData",
           "display": {
             "en": {
@@ -319,6 +409,12 @@
         "startAt": {
           "type": "timestamp",
           "requirement": "conditional",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "scheduleType",
+            "value": "absolute"
+          },
+          "requiredWhenMet": true,
           "bindingHint": "masterData",
           "display": {
             "en": {
@@ -334,6 +430,12 @@
         "trigger": {
           "type": "string",
           "requirement": "conditional",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "scheduleType",
+            "value": "relative"
+          },
+          "requiredWhenMet": true,
           "bindingHint": "assetDelivery",
           "display": {
             "en": {

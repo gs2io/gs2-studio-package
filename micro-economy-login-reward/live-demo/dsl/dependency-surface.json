@@ -348,6 +348,12 @@
         "repeat": {
           "type": "enum<enabled|disabled>",
           "requirement": "conditional",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "mode",
+            "value": "streaming"
+          },
+          "requiredWhenMet": true,
           "bindingHint": "masterData",
           "display": {
             "en": {
@@ -363,6 +369,12 @@
         "resetHour": {
           "type": "int32",
           "requirement": "conditional",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "mode",
+            "value": "streaming"
+          },
+          "requiredWhenMet": true,
           "bindingHint": "masterData",
           "display": {
             "en": {
@@ -380,6 +392,12 @@
         "schedule": {
           "type": "ref<foundation-economy-schedule:Schedule>",
           "requirement": "conditional",
+          "condition": {
+            "kind": "eq",
+            "propertyName": "mode",
+            "value": "schedule"
+          },
+          "requiredWhenMet": true,
           "bindingHint": "assetDelivery",
           "display": {
             "en": {
