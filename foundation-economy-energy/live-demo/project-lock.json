@@ -1,8 +1,8 @@
 {
   "entries": [
     {
-      "commitSha": "068d4b0f91a2d8ad1d1b22e0c41c9f3592c04b11",
-      "integrity": "sha256-KkS2VJwkSZ3u4uzoWOF2DR3/JCWIYoPvsNOjSE9eKYo=",
+      "commitSha": "521263e6a7518672fcfcdd65cc953f900eedba80",
+      "integrity": "sha256-y0xiLXOvf99dJiiOl3jfgOPfP9hor7bQeEKRSsbVrNY=",
       "owner": "gs2io",
       "packageId": "foundation-economy-energy",
       "repo": "gs2-studio-package",

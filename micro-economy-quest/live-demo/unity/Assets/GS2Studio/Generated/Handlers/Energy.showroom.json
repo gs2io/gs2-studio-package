@@ -79,6 +79,16 @@
       ]
     },
     {
+      "className": "EnergyNextRecoveryCountdown",
+      "itemIds": [
+        "uii_1242CR51AXAYWT2RAQ93TB9YY7"
+      ],
+      "kind": "countdown",
+      "valueType": "",
+      "reportsFailure": false,
+      "serializedFields": []
+    },
+    {
       "className": "EnergyNextRecoveryValue",
       "itemIds": [
         "uii_6MCW3HYG84AMTT7145KZDGVE1N"
