@@ -71,13 +71,19 @@ namespace GS2Studio.Generated.Gacha
         }
 
 
-        /// <summary>Explicit reload handles changes not observed by subscriptions; ordinary bound updates do not require replacing the binder.</summary>
+        /// <summary>
+        /// Not needed after an action: the bound row already follows the GS2 SDK cache, which applies action results.
+        /// Reload replaces the binder with one that reads that cache again; GS2 is asked only for a missing or expired entry.
+        /// Use it after changing the runtime provider, its session or the binder factory, or to retry after Failed.
+        /// For changes this client cannot observe, call <see cref="Invalidate"/> instead.
+        /// </summary>
         public void Reload()
         {
             if (IsReadyForReload())
                 _ = TryReloadAsync(this.GetCancellationTokenOnDestroy());
         }
 
+        /// <inheritdoc cref="Reload"/>
         public async Task ReloadAsync(CancellationToken cancellationToken = default)
         {
             if (_isDestroyed) return;
@@ -155,6 +161,7 @@ namespace GS2Studio.Generated.Gacha
             Attach(binder, subscribe, generation);
         }
 
+        /// <summary>Drop this row from the GS2 SDK cache so GS2 is asked again and the bound row updates; only for changes this client cannot observe, such as another device's or a server script's.</summary>
         public void Invalidate()
         {
             _binder?.Invalidate();

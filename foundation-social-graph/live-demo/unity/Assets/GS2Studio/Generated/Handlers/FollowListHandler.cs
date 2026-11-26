@@ -138,6 +138,11 @@ namespace GS2Studio.Generated.Follow
             ListChanged?.Invoke();
         }
 
+        /// <summary>
+        /// Not needed after an action: the rows already follow the GS2 SDK cache, which applies action results.
+        /// ReloadAsync rebuilds the list from that cache; GS2 is asked only for a missing or expired list.
+        /// Use it after changing the runtime provider, its session or the binder factory, or to retry after Failed.
+        /// </summary>
         public async Task ReloadAsync(CancellationToken cancellationToken = default)
         {
             if (_isDestroyed) return;
