@@ -50,6 +50,16 @@
       }
     },
     {
+      "componentClassName": "NextRecoveryCountdown",
+      "id": "uii_1242CR51AXAYWT2RAQ93TB9YY7",
+      "kind": "countdown",
+      "name": "Energy",
+      "source": {
+        "kind": "property",
+        "propertyId": "prop_39T9A7P2NH6PNT4W12H0FZX9WW"
+      }
+    },
+    {
       "componentClassName": "FullActiveToggle",
       "condition": {
         "kind": "comparison",

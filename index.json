@@ -109,6 +109,9 @@
         "en": "Manages a stamina meter that recovers over time."
       },
       "dependsOn": [],
+      "engines": {
+        "gs2studio": ">=2026.11.17"
+      },
       "install": {
         "url": "https://github.com/gs2io/gs2-studio-package/tree/main/foundation-economy-energy/packages/foundation-economy-energy"
       }

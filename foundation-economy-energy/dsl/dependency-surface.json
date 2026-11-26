@@ -27,6 +27,11 @@
           "name": "Energy",
           "packageId": "foundation-economy-energy"
         },
+        "NextRecoveryCountdown": {
+          "kind": "countdown",
+          "name": "Energy",
+          "packageId": "foundation-economy-energy"
+        },
         "NextRecoveryValue": {
           "kind": "value",
           "name": "Energy",

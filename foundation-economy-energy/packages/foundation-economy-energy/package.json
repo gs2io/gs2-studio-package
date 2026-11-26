@@ -2,6 +2,9 @@
   "id": "foundation-economy-energy",
   "name": "foundation-economy-energy",
   "version": "0.0.1",
+  "engines": {
+    "gs2studio": ">=2026.11.17"
+  },
   "display": {
     "en": {
       "description": "Manages a stamina meter that recovers over time.",

@@ -207,6 +207,7 @@ export const foundationEconomyEnergy = definePackage({
           currentMaximumValue: UiSource.prop("currentMaximumValue"),
         }, { name: "Energy" }),
     UiItem.value("NextRecoveryValue", UiSource.prop("nextRecoveredAt"), { name: "Energy" }),
+    UiItem.countdown("NextRecoveryCountdown", UiSource.prop("nextRecoveredAt"), { name: "Energy" }),
     UiItem.activeToggle("FullActiveToggle", UiCond.gte(UiSource.prop("currentValue"), UiSource.prop("currentMaximumValue")), { name: "Energy" }),
   ],
 }),
