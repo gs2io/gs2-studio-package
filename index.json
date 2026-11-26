@@ -89,8 +89,8 @@
         "en": "Currency"
       },
       "description": {
-        "ja": "ゲーム内通貨の残高（ウォレット）と、通貨を購入するストア商品を扱います。",
-        "en": "Manages an in-game currency balance (wallet) and the store products that sell it."
+        "ja": "ゲーム内通貨の残高（ウォレット）を扱います。報酬などで配る無償通貨と、購入した有償通貨を分けて管理します。通貨を購入するストア商品も扱えます。",
+        "en": "Manages an in-game currency balance (wallet), keeping free currency given as rewards apart from paid currency that players buy. It also handles the store products that sell the currency."
       },
       "dependsOn": [],
       "install": {
