@@ -158,12 +158,12 @@ export const foundationCoreIdentity = definePackage({
     ja: {
       label: "引き継ぎ設定",
       description:
-        "引き継ぎコード（IDとパスワード）を発行し、そのコードを使って別の端末やブラウザにアカウントを引き継ぎます。",
+        "プレイヤーのアカウント（GS2-Account のネームスペース）を用意します。どのゲームでもプレイヤーのログインに必要です。引き継ぎコード（IDとパスワード）を発行して、別の端末やブラウザへアカウントを引き継ぐこともできます。",
     },
     en: {
       label: "Account Transfer",
       description:
-        "Issues transfer codes (an ID and a password) and uses them to take the account over on another device or browser.",
+        "Sets up player accounts (the GS2-Account namespace) that every game needs to sign players in. It also issues transfer codes (an ID and a password) to take the account over on another device or browser.",
     },
   },
   domainTypes: [TakeOverSetting, TransferCode],

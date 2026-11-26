@@ -4,11 +4,11 @@
   "version": "0.0.1",
   "display": {
     "en": {
-      "description": "Issues transfer codes (an ID and a password) and uses them to take the account over on another device or browser.",
+      "description": "Sets up player accounts (the GS2-Account namespace) that every game needs to sign players in. It also issues transfer codes (an ID and a password) to take the account over on another device or browser.",
       "label": "Account Transfer"
     },
     "ja": {
-      "description": "引き継ぎコード（IDとパスワード）を発行し、そのコードを使って別の端末やブラウザにアカウントを引き継ぎます。",
+      "description": "プレイヤーのアカウント（GS2-Account のネームスペース）を用意します。どのゲームでもプレイヤーのログインに必要です。引き継ぎコード（IDとパスワード）を発行して、別の端末やブラウザへアカウントを引き継ぐこともできます。",
       "label": "引き継ぎ設定"
     }
   }
