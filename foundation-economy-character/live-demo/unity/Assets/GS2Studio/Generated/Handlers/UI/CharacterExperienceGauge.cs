@@ -29,6 +29,7 @@ namespace GS2Studio.Generated.Character.UI
         [Gs2AutoResolvedHandler]
         [SerializeField] private CharacterExperienceHandlerBase? _characterExperienceHandler;
         [SerializeField] private Image? _target;
+        private bool _warnedUnfilledTarget;
 
         /// <summary>Scene baking compares these names with Gs2SkipsLoaders before a missing loader can leave readings at their defaults.</summary>
         public static readonly string[] RequiredLoaders = { "UserdataExperienceCharacterExperienceExperienceModel" };
@@ -102,6 +103,14 @@ namespace GS2Studio.Generated.Character.UI
         {
             WarnUnloadedLoadersOnce();
             if (_target == null) return;
+            // fillAmount draws nothing different on an Image that is not Filled or has no sprite, so say so once.
+            if (!_warnedUnfilledTarget && (_target.type != Image.Type.Filled || _target.sprite == null))
+            {
+                _warnedUnfilledTarget = true;
+                Debug.LogWarning(
+                    $"{nameof(CharacterExperienceGauge)} on '{name}': the target Image '{_target.name}' does not show its fill; " +
+                    "set its Image Type to Filled and give it a Source Image (any sprite, such as a white one).", this);
+            }
             var current = System.Convert.ToDouble(model.Experience, System.Globalization.CultureInfo.InvariantCulture);
             var max = ResolveMaxBand(model);
             var min = ResolveMinBand(model);

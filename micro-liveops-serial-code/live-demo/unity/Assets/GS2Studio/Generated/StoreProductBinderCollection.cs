@@ -177,7 +177,7 @@ namespace GS2Studio.Generated.StoreProduct
         public void Invalidate()
         {
             ThrowIfDisposed();
-            if (_showcaseName != null) new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("ShopCurrency", _showcaseName).Invalidate(_gs2, _session);
+            if (_showcaseName != null) new Gs2Bind.Gs2Showcase.ShowcaseDisplayItemArrayLoader("ShopCurrency", (_showcaseName ?? throw new InvalidOperationException("_showcaseName is not set; the mounted axis reads it."))).Invalidate(_gs2, _session);
             new Gs2Bind.Gs2Money2.StoreContentModelArrayLoader("Currency").Invalidate(_gs2, _session);
         }
 

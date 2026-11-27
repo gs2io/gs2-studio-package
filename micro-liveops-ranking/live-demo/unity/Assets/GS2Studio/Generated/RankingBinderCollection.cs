@@ -179,7 +179,7 @@ namespace GS2Studio.Generated.Ranking
         {
             ThrowIfDisposed();
             new Gs2Bind.Gs2Ranking2.GlobalRankingModelArrayLoader("Ranking").Invalidate(_gs2, _session);
-            if (_rankingName != null && _season != null) new Gs2Bind.Gs2Ranking2.GlobalRankingScoreArrayLoader("Ranking", _rankingName, _season).Invalidate(_gs2, _session);
+            if (_rankingName != null && _season != null) new Gs2Bind.Gs2Ranking2.GlobalRankingScoreArrayLoader("Ranking", (_rankingName ?? throw new InvalidOperationException("_rankingName is not set; the mounted axis reads it.")), (_season ?? throw new InvalidOperationException("_season is not set; the mounted axis reads it."))).Invalidate(_gs2, _session);
         }
 
         // Stable sorting preserves row order when both the sort key and domain ID compare equal.

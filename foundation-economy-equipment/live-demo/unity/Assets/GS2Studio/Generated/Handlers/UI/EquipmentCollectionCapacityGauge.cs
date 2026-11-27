@@ -24,6 +24,7 @@ namespace GS2Studio.Generated.EquipmentCollection.UI
         [Gs2AutoResolvedHandler]
         [SerializeField] private EquipmentCollectionHandlerBase? _handler;
         [SerializeField] private Image? _target;
+        private bool _warnedUnfilledTarget;
 
         private bool _subscribed;
         private bool _warnedMissingHandler;
@@ -66,6 +67,14 @@ namespace GS2Studio.Generated.EquipmentCollection.UI
         private void OnUpdated(EquipmentCollection model)
         {
             if (_target == null) return;
+            // fillAmount draws nothing different on an Image that is not Filled or has no sprite, so say so once.
+            if (!_warnedUnfilledTarget && (_target.type != Image.Type.Filled || _target.sprite == null))
+            {
+                _warnedUnfilledTarget = true;
+                Debug.LogWarning(
+                    $"{nameof(EquipmentCollectionCapacityGauge)} on '{name}': the target Image '{_target.name}' does not show its fill; " +
+                    "set its Image Type to Filled and give it a Source Image (any sprite, such as a white one).", this);
+            }
             var current = System.Convert.ToDouble(model.CurrentCapacityUsage, System.Globalization.CultureInfo.InvariantCulture);
             var max = System.Convert.ToDouble(model.CurrentMaximumCapacity, System.Globalization.CultureInfo.InvariantCulture);
             var fraction = max > 0d ? current / max : 0d;            if (fraction < 0d) fraction = 0d;

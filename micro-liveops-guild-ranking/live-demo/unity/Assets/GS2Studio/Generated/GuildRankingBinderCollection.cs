@@ -182,7 +182,7 @@ namespace GS2Studio.Generated.GuildRanking
         {
             ThrowIfDisposed();
             new Gs2Bind.Gs2Ranking2.ClusterRankingModelArrayLoader("GuildRanking").Invalidate(_gs2, _session);
-            if (_rankingName != null && _clusterName != null && _season != null) new Gs2Bind.Gs2Ranking2.ClusterRankingScoreArrayLoader("GuildRanking", _rankingName, _clusterName, _season).Invalidate(_gs2, _session);
+            if (_rankingName != null && _clusterName != null && _season != null) new Gs2Bind.Gs2Ranking2.ClusterRankingScoreArrayLoader("GuildRanking", (_rankingName ?? throw new InvalidOperationException("_rankingName is not set; the mounted axis reads it.")), (_clusterName ?? throw new InvalidOperationException("_clusterName is not set; the mounted axis reads it.")), (_season ?? throw new InvalidOperationException("_season is not set; the mounted axis reads it."))).Invalidate(_gs2, _session);
         }
 
         // Stable sorting preserves row order when both the sort key and domain ID compare equal.
