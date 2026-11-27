@@ -316,12 +316,13 @@ export const foundationEconomyCurrency = definePackage({
   display: {
     ja: {
       label: "通貨",
-      description: "ゲーム内通貨の残高（ウォレット）と、通貨を購入するストア商品を扱います。",
+      description:
+        "ゲーム内通貨の残高（ウォレット）を扱います。報酬などで配る無償通貨と、購入した有償通貨を分けて管理します。通貨を購入するストア商品も扱えます。",
     },
     en: {
       label: "Currency",
       description:
-        "Manages an in-game currency balance (wallet) and the store products that sell it.",
+        "Manages an in-game currency balance (wallet), keeping free currency given as rewards apart from paid currency that players buy. It also handles the store products that sell the currency.",
     },
   },
   domainTypes: [Wallet, StoreProduct, CurrencyStore],
