@@ -13,6 +13,8 @@ import {
   UiSource,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import enhanceSurface from "../../dsl/dependency-surface.json";
@@ -156,11 +158,11 @@ export const microEconomyCharacterEnhanceDemo = definePackage({
         "Supplies the recipe and materials the live demo enhances with, and the presses that get materials and spend them on a character.",
     },
   },
-  dependencies: {
-    [enhance.packageId]: "github:gs2io/gs2-studio-package",
-    [character.packageId]: "github:gs2io/gs2-studio-package",
-    [characterDemo.packageId]: "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(
+    enhance.packageId,
+    character.packageId,
+    characterDemo.packageId
+  ),
   instances: [
     instance(CharacterEnhance, RECIPE, {}),
     instance(CharacterEnhanceBonus, "normal", bonus(1.0, 80)),

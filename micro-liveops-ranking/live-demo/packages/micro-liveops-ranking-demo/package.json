@@ -3,12 +3,12 @@
   "name": "micro-liveops-ranking-demo",
   "version": "0.0.1",
   "dependencies": {
-    "foundation-economy-currency": "github:gs2io/gs2-studio-package",
-    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
-    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
-    "foundation-economy-schedule-demo": "github:gs2io/gs2-studio-package",
-    "micro-liveops-ranking": "github:gs2io/gs2-studio-package",
-    "micro-shop-currency": "github:gs2io/gs2-studio-package"
+    "foundation-economy-currency": "file:../../../../foundation-economy-currency/packages/foundation-economy-currency",
+    "foundation-economy-currency-demo": "file:../../../../foundation-economy-currency/live-demo/packages/foundation-economy-currency-demo",
+    "foundation-economy-schedule": "file:../../../../foundation-economy-schedule/packages/foundation-economy-schedule",
+    "foundation-economy-schedule-demo": "file:../../../../foundation-economy-schedule/live-demo/packages/foundation-economy-schedule-demo",
+    "micro-liveops-ranking": "file:../../../../micro-liveops-ranking/packages/micro-liveops-ranking",
+    "micro-shop-currency": "file:../../../../micro-shop-currency/packages/micro-shop-currency"
   },
   "display": {
     "en": {

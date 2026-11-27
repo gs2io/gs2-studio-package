@@ -3,7 +3,7 @@
   "name": "foundation-economy-ad-demo",
   "version": "0.0.1",
   "dependencies": {
-    "foundation-economy-ad": "github:gs2io/gs2-studio-package"
+    "foundation-economy-ad": "file:../../../../foundation-economy-ad/packages/foundation-economy-ad"
   },
   "display": {
     "en": {

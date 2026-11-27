@@ -13,6 +13,8 @@ import {
   UiSource,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import enchantSurface from "../../dsl/dependency-surface.json";
@@ -148,14 +150,14 @@ export const microEconomyEquipmentEnchantDemo = definePackage({
         "Supplies the enchantment pool the live demo rolls from, and the presses that reroll a piece's bonuses or add one.",
     },
   },
-  dependencies: {
-    [enchant.packageId]: "github:gs2io/gs2-studio-package",
-    [equipment.packageId]: "github:gs2io/gs2-studio-package",
-    "foundation-economy-equipment-demo": "github:gs2io/gs2-studio-package",
-    [currency.packageId]: "github:gs2io/gs2-studio-package",
-    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
-    "micro-shop-currency": "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(
+    enchant.packageId,
+    equipment.packageId,
+    "foundation-economy-equipment-demo",
+    currency.packageId,
+    "foundation-economy-currency-demo",
+    "micro-shop-currency"
+  ),
   instances: [
     instance(EquipmentEnchant, STANDARD, { [MAXIMUM_PARAMETER_COUNT]: 3 }),
     instance(EquipmentEnchantSlotChance, "one", slotChance(1, 50)),

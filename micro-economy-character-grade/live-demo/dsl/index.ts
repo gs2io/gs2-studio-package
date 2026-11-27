@@ -14,6 +14,8 @@ import {
   UiSource,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { CHARACTER_LEVEL_KEY_PLACEHOLDER } from "../../../dsl/characterLevelKey";
@@ -123,11 +125,7 @@ export const microEconomyCharacterGradeDemo = definePackage({
         "Supplies the grade steps the live demo raises through, and the presses that train and break the limit.",
     },
   },
-  dependencies: {
-    [grade.packageId]: "github:gs2io/gs2-studio-package",
-    [character.packageId]: "github:gs2io/gs2-studio-package",
-    [characterDemo.packageId]: "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(grade.packageId, character.packageId, characterDemo.packageId),
   instances: [
     instance(CharacterGradeStep, "grade1", gradeStep(GRADE_CAPS[0])),
     instance(CharacterGradeStep, "grade2", gradeStep(GRADE_CAPS[1])),

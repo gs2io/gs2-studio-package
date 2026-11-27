@@ -16,6 +16,8 @@ import {
   UiSource,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import equipmentSurface from "../../dsl/dependency-surface.json";
@@ -121,9 +123,7 @@ export const foundationEconomyEquipmentDemo = definePackage({
         "Supplies the equipment catalog and bag used by the live demo, and the presses that take, discard and expand.",
     },
   },
-  dependencies: {
-    [equipment.packageId]: "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(equipment.packageId),
   domainTypes: [EquipmentCatalog],
   instances: [
     instance(EquipmentCategory, "weapon", {}),

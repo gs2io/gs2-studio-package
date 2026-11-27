@@ -4,6 +4,8 @@ import {
   instance,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import loadoutSurface from "../../dsl/dependency-surface.json";
 
 import characterDemoSurface from "../../../foundation-economy-character/live-demo/dsl/dependency-surface.json";
@@ -50,13 +52,13 @@ export const microEconomyEquipmentLoadoutDemo = definePackage({
       description: "Supplies the weapon and armor slots the live demo uses.",
     },
   },
-  dependencies: {
-    [loadout.packageId]: "github:gs2io/gs2-studio-package",
-    [character.packageId]: "github:gs2io/gs2-studio-package",
-    [characterDemo.packageId]: "github:gs2io/gs2-studio-package",
-    [equipment.packageId]: "github:gs2io/gs2-studio-package",
-    [equipmentDemo.packageId]: "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(
+    loadout.packageId,
+    character.packageId,
+    characterDemo.packageId,
+    equipment.packageId,
+    equipmentDemo.packageId
+  ),
   instances: [
     instance(EquipmentSlot, "weapon", slot("iron-sword", "oak-staff")),
     instance(EquipmentSlot, "armor", slot("steel-shield")),

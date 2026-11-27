@@ -14,6 +14,8 @@ import {
   UiSource,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import formationSurface from "../../dsl/dependency-surface.json";
@@ -75,11 +77,11 @@ export const foundationEconomyCharacterFormationDemo = definePackage({
       description: "Supplies the formation slots and the save-area expansion the live demo uses.",
     },
   },
-  dependencies: {
-    [formation.packageId]: "github:gs2io/gs2-studio-package",
-    [character.packageId]: "github:gs2io/gs2-studio-package",
-    [characterDemo.packageId]: "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(
+    formation.packageId,
+    character.packageId,
+    characterDemo.packageId
+  ),
   instances: [
     instance(CharacterFormation, "characterformation", {
     [formation.propertyId("CharacterFormation", "initialSaveArea")]: 2,

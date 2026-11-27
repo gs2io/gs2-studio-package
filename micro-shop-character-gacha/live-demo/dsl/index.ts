@@ -8,6 +8,8 @@ import {
   UiSource,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import gachaSurface from "../../dsl/dependency-surface.json";
 
 import characterDemoSurface from "../../../foundation-economy-character/live-demo/dsl/dependency-surface.json";
@@ -66,17 +68,17 @@ export const microShopCharacterGachaDemo = definePackage({
       description: "Supplies one gacha, its per-rarity rates, and the coins a draw costs.",
     },
   },
-  dependencies: {
-    [gacha.packageId]: "github:gs2io/gs2-studio-package",
-    [characterDemo.packageId]: "github:gs2io/gs2-studio-package",
-    "foundation-economy-character": "github:gs2io/gs2-studio-package",
-    "foundation-economy-character-dictionary": "github:gs2io/gs2-studio-package",
-    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
-    "foundation-economy-schedule-demo": "github:gs2io/gs2-studio-package",
-    "micro-shop-currency": "github:gs2io/gs2-studio-package",
-    [currency.packageId]: "github:gs2io/gs2-studio-package",
-    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(
+    gacha.packageId,
+    characterDemo.packageId,
+    "foundation-economy-character",
+    "foundation-economy-character-dictionary",
+    "foundation-economy-schedule",
+    "foundation-economy-schedule-demo",
+    "micro-shop-currency",
+    currency.packageId,
+    "foundation-economy-currency-demo"
+  ),
   domainTypes: [Gacha],
   instances: [
     instance(GachaRarity, "common", {}),

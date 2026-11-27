@@ -1,15 +1,4 @@
 {
-  "entries": [
-    {
-      "commitSha": "1c7c8f602b18081aea4acdb42820cd4c8109a3fd",
-      "integrity": "sha256-JEjQ5yJbPCuIYO/QNdbDfEWCjQZzy2C4/Nle4uEzGlI=",
-      "owner": "gs2io",
-      "packageId": "foundation-economy-character",
-      "repo": "gs2-studio-package",
-      "sourceKind": "github",
-      "subdirectory": "foundation-economy-character/packages/foundation-economy-character",
-      "version": "0.0.1"
-    }
-  ],
+  "entries": [],
   "schemaVersion": 1
 }

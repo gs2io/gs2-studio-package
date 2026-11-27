@@ -3,7 +3,7 @@
   "name": "foundation-social-graph-demo",
   "version": "0.0.1",
   "dependencies": {
-    "foundation-social-graph": "github:gs2io/gs2-studio-package"
+    "foundation-social-graph": "file:../../../../foundation-social-graph/packages/foundation-social-graph"
   },
   "display": {
     "en": {

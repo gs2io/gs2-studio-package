@@ -14,6 +14,8 @@ import {
   UiSource,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import adSurface from "../../dsl/dependency-surface.json";
@@ -99,9 +101,7 @@ export const foundationEconomyAdDemo = definePackage({
         "Supplies the ad platform settings used by the live demo, and the presses that earn and spend a view point. No advertisement is actually played.",
     },
   },
-  dependencies: {
-    [ad.packageId]: "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(ad.packageId),
   instances: [
     instance(AdPlatform, AD_PLATFORM, {
     [ad.propertyId("AdPlatform", "unityAdKeys")]: UNITY_AD_KEYS,

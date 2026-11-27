@@ -19,6 +19,7 @@ import {
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField } from "../../../dsl/jaEnField";
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
 
 import loginRewardSurface from "../../dsl/dependency-surface.json";
 
@@ -147,14 +148,14 @@ export const microEconomyLoginRewardDemo = definePackage({
         "Supplies the live demo's seven-day login bonus, the coins each day pays, and the press that starts the track over. The rewards land in the currency package's wallet.",
     },
   },
-  dependencies: {
-    [loginReward.packageId]: "github:gs2io/gs2-studio-package",
-    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
-    "foundation-economy-schedule-demo": "github:gs2io/gs2-studio-package",
-    [currency.packageId]: "github:gs2io/gs2-studio-package",
-    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
-    "micro-shop-currency": "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(
+    loginReward.packageId,
+    "foundation-economy-schedule",
+    "foundation-economy-schedule-demo",
+    currency.packageId,
+    "foundation-economy-currency-demo",
+    "micro-shop-currency"
+  ),
   domainTypes: [LoginRewardCollection, LoginReward],
   instances: [
     instance(LoginRewardCollection, DAILY, {

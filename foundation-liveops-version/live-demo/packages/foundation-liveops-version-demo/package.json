@@ -3,7 +3,7 @@
   "name": "foundation-liveops-version-demo",
   "version": "0.0.1",
   "dependencies": {
-    "foundation-liveops-version": "github:gs2io/gs2-studio-package"
+    "foundation-liveops-version": "file:../../../../foundation-liveops-version/packages/foundation-liveops-version"
   },
   "display": {
     "en": {

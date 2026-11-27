@@ -18,6 +18,7 @@ import {
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField } from "../../../dsl/jaEnField";
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
 
 import shopSurface from "../../dsl/dependency-surface.json";
 
@@ -132,14 +133,14 @@ export const microShopEnergyDemo = definePackage({
         "Supplies the stamina products the live demo sells, what each charges, and the press that buys one.",
     },
   },
-  dependencies: {
-    [shop.packageId]: "github:gs2io/gs2-studio-package",
-    [energy.packageId]: "github:gs2io/gs2-studio-package",
-    [currency.packageId]: "github:gs2io/gs2-studio-package",
-    "foundation-economy-energy-demo": "github:gs2io/gs2-studio-package",
-    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
-    "micro-shop-currency": "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(
+    shop.packageId,
+    energy.packageId,
+    currency.packageId,
+    "foundation-economy-energy-demo",
+    "foundation-economy-currency-demo",
+    "micro-shop-currency"
+  ),
   domainTypes: [EnergyProduct],
   instances: [
     instance(EnergyProduct, PRODUCTS[0].id, {

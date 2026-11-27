@@ -14,6 +14,8 @@ import {
   UiItem,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import buffSurface from "../../dsl/dependency-surface.json";
@@ -136,16 +138,16 @@ export const microEconomyBuffDemo = definePackage({
         "Supplies the live demo's buff that doubles idle rewards during a campaign, and the presses that start and end the campaign.",
     },
   },
-  dependencies: {
-    [buff.packageId]: "github:gs2io/gs2-studio-package",
-    [schedule.packageId]: "github:gs2io/gs2-studio-package",
-    [scheduleDemo.packageId]: "github:gs2io/gs2-studio-package",
-    [idle.packageId]: "github:gs2io/gs2-studio-package",
-    [idleDemo.packageId]: "github:gs2io/gs2-studio-package",
-    [currency.packageId]: "github:gs2io/gs2-studio-package",
-    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
-    "micro-shop-currency": "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(
+    buff.packageId,
+    schedule.packageId,
+    scheduleDemo.packageId,
+    idle.packageId,
+    idleDemo.packageId,
+    currency.packageId,
+    "foundation-economy-currency-demo",
+    "micro-shop-currency"
+  ),
   domainTypes: [Buff, BuffCampaign],
   instances: [
     instance(Buff, "double-idle", {

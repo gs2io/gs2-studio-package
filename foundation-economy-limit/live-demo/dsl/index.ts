@@ -19,6 +19,7 @@ import {
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField } from "../../../dsl/jaEnField";
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
 
 import limitSurface from "../../dsl/dependency-surface.json";
 
@@ -176,11 +177,7 @@ export const foundationEconomyLimitDemo = definePackage({
         "Supplies the daily and weekly schedules the live demo shows, the four allowances that follow them, the free and ad-backed presses that use one, and the reset that puts them all back. The view point it spends comes from the ad demo.",
     },
   },
-  dependencies: {
-    [limit.packageId]: "github:gs2io/gs2-studio-package",
-    [adDemo.packageId]: "github:gs2io/gs2-studio-package",
-    [ad.packageId]: "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(limit.packageId, adDemo.packageId, ad.packageId),
   domainTypes: [UsageLimitCounter],
   instances: [
     instance(UsageLimit, DAILY, {

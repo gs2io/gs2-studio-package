@@ -11,6 +11,7 @@ import {
 } from "gs2-studio-dsl";
 
 import { jaEnField } from "../../../dsl/jaEnField";
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
 
 import currencySurface from "../../../foundation-economy-currency/dsl/dependency-surface.json";
 
@@ -89,14 +90,14 @@ export const microEconomySkillTreeDemo = definePackage({
         "Supplies the live demo's four skill nodes and the coins their unlock costs are paid from. What is unlocked is tracked per character.",
     },
   },
-  dependencies: {
-    [skillTree.packageId]: "github:gs2io/gs2-studio-package",
-    "foundation-economy-character": "github:gs2io/gs2-studio-package",
-    "foundation-economy-character-demo": "github:gs2io/gs2-studio-package",
-    [currency.packageId]: "github:gs2io/gs2-studio-package",
-    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
-    "micro-shop-currency": "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(
+    skillTree.packageId,
+    "foundation-economy-character",
+    "foundation-economy-character-demo",
+    currency.packageId,
+    "foundation-economy-currency-demo",
+    "micro-shop-currency"
+  ),
   domainTypes: [SkillNode],
   instances: [
     ...NODES.map(({ id, premises, cost }) => instance(SkillNode, id, {

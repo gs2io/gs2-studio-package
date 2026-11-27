@@ -6,6 +6,8 @@ import {
   UiSource,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import graphSurface from "../../dsl/dependency-surface.json";
 
 const graph = dependencyPackage(graphSurface);
@@ -35,9 +37,7 @@ export const foundationSocialGraphDemo = definePackage({
         "Supplies what the live demo shows of a profile, a friend, a follow and a friend request.",
     },
   },
-  dependencies: {
-    [graph.packageId]: "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(graph.packageId),
   uiComponents: [
     defineUiComponent(Profile, {
   items: [

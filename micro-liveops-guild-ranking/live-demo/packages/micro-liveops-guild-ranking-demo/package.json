@@ -3,14 +3,14 @@
   "name": "micro-liveops-guild-ranking-demo",
   "version": "0.0.1",
   "dependencies": {
-    "foundation-economy-currency": "github:gs2io/gs2-studio-package",
-    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
-    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
-    "foundation-economy-schedule-demo": "github:gs2io/gs2-studio-package",
-    "foundation-social-guild": "github:gs2io/gs2-studio-package",
-    "foundation-social-guild-demo": "github:gs2io/gs2-studio-package",
-    "micro-liveops-guild-ranking": "github:gs2io/gs2-studio-package",
-    "micro-shop-currency": "github:gs2io/gs2-studio-package"
+    "foundation-economy-currency": "file:../../../../foundation-economy-currency/packages/foundation-economy-currency",
+    "foundation-economy-currency-demo": "file:../../../../foundation-economy-currency/live-demo/packages/foundation-economy-currency-demo",
+    "foundation-economy-schedule": "file:../../../../foundation-economy-schedule/packages/foundation-economy-schedule",
+    "foundation-economy-schedule-demo": "file:../../../../foundation-economy-schedule/live-demo/packages/foundation-economy-schedule-demo",
+    "foundation-social-guild": "file:../../../../foundation-social-guild/packages/foundation-social-guild",
+    "foundation-social-guild-demo": "file:../../../../foundation-social-guild/live-demo/packages/foundation-social-guild-demo",
+    "micro-liveops-guild-ranking": "file:../../../../micro-liveops-guild-ranking/packages/micro-liveops-guild-ranking",
+    "micro-shop-currency": "file:../../../../micro-shop-currency/packages/micro-shop-currency"
   },
   "display": {
     "en": {

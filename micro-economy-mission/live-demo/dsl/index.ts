@@ -19,6 +19,7 @@ import {
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField } from "../../../dsl/jaEnField";
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
 
 import missionSurface from "../../dsl/dependency-surface.json";
 
@@ -131,14 +132,14 @@ export const microEconomyMissionDemo = definePackage({
         "Supplies the live demo's reset settings, the one counter it shows, the four missions that read it, the two groups they belong to, and the press that advances the counter. The rewards land in the currency package's wallet.",
     },
   },
-  dependencies: {
-    [mission.packageId]: "github:gs2io/gs2-studio-package",
-    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
-    "foundation-economy-schedule-demo": "github:gs2io/gs2-studio-package",
-    [currency.packageId]: "github:gs2io/gs2-studio-package",
-    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
-    "micro-shop-currency": "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(
+    mission.packageId,
+    "foundation-economy-schedule",
+    "foundation-economy-schedule-demo",
+    currency.packageId,
+    "foundation-economy-currency-demo",
+    "micro-shop-currency"
+  ),
   domainTypes: [Mission],
   instances: [
     instance(MissionSetting, "missionsetting", {

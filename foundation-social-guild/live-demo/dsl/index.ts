@@ -7,6 +7,8 @@ import {
   UiSource,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import guildSurface from "../../dsl/dependency-surface.json";
 
 const guild = dependencyPackage(guildSurface);
@@ -57,9 +59,7 @@ export const foundationSocialGuildDemo = definePackage({
       description: "Supplies the live demo's one guild kind and its two roles, master and member.",
     },
   },
-  dependencies: {
-    [guild.packageId]: "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(guild.packageId),
   instances: [
     instance(GuildRole, "master", {
     [guild.propertyId("GuildRole", "policyDocument")]: MASTER_POLICY,

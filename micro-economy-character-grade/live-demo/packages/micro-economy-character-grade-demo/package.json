@@ -3,9 +3,9 @@
   "name": "micro-economy-character-grade-demo",
   "version": "0.0.1",
   "dependencies": {
-    "foundation-economy-character": "github:gs2io/gs2-studio-package",
-    "foundation-economy-character-demo": "github:gs2io/gs2-studio-package",
-    "micro-economy-character-grade": "github:gs2io/gs2-studio-package"
+    "foundation-economy-character": "file:../../../../foundation-economy-character/packages/foundation-economy-character",
+    "foundation-economy-character-demo": "file:../../../../foundation-economy-character/live-demo/packages/foundation-economy-character-demo",
+    "micro-economy-character-grade": "file:../../../../micro-economy-character-grade/packages/micro-economy-character-grade"
   },
   "display": {
     "en": {

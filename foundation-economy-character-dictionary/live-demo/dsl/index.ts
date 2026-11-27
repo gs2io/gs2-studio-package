@@ -11,6 +11,8 @@ import {
   UiItem,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import dictionarySurface from "../../dsl/dependency-surface.json";
@@ -70,11 +72,11 @@ export const foundationEconomyCharacterDictionaryDemo = definePackage({
         "Supplies the roster the live demo shows, and the press that recruits one into the dex.",
     },
   },
-  dependencies: {
-    [dictionary.packageId]: "github:gs2io/gs2-studio-package",
-    [characterDemo.packageId]: "github:gs2io/gs2-studio-package",
-    [CHARACTER_PACKAGE_ID]: "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(
+    dictionary.packageId,
+    characterDemo.packageId,
+    CHARACTER_PACKAGE_ID
+  ),
   delegatedActions: [
     { target: Character, methodName: "Recruit", action: { targetActionKey: "Gs2Exchange:RateModel.Exchange", targetResource: DexRecruitRateModel, parameterOverrides: [{ parameterName: "count", source: { kind: "static", value: 1 } }] } },
   ],

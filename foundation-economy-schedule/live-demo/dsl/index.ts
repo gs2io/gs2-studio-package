@@ -15,6 +15,8 @@ import {
   UiSource,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import scheduleSurface from "../../dsl/dependency-surface.json";
@@ -112,9 +114,7 @@ export const foundationEconomyScheduleDemo = definePackage({
         "Supplies the event windows used by the live demo, and the presses that pull, extend and clear a trigger.",
     },
   },
-  dependencies: {
-    [schedule.packageId]: "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(schedule.packageId),
   domainTypes: [TriggerPull],
   instances: [
     instance(Schedule, "open-season", {

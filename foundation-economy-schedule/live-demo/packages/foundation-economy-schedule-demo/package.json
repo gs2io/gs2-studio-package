@@ -3,7 +3,7 @@
   "name": "foundation-economy-schedule-demo",
   "version": "0.0.1",
   "dependencies": {
-    "foundation-economy-schedule": "github:gs2io/gs2-studio-package"
+    "foundation-economy-schedule": "file:../../../../foundation-economy-schedule/packages/foundation-economy-schedule"
   },
   "display": {
     "en": {

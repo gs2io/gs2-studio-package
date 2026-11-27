@@ -9,6 +9,7 @@ import {
 } from "gs2-studio-dsl";
 
 import { jaEnField } from "../../../dsl/jaEnField";
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
 
 import guildRankingSurface from "../../dsl/dependency-surface.json";
 
@@ -123,16 +124,16 @@ export const microLiveopsGuildRankingDemo = definePackage({
         "Supplies the live demo's per-guild ranking, the coins each reward tier pays, and the rule of its daily season. The rewards land in the currency package's wallet.",
     },
   },
-  dependencies: {
-    [guildRanking.packageId]: "github:gs2io/gs2-studio-package",
-    [guild.packageId]: "github:gs2io/gs2-studio-package",
-    [guildDemo.packageId]: "github:gs2io/gs2-studio-package",
-    [schedule.packageId]: "github:gs2io/gs2-studio-package",
-    [scheduleDemo.packageId]: "github:gs2io/gs2-studio-package",
-    [currency.packageId]: "github:gs2io/gs2-studio-package",
-    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
-    "micro-shop-currency": "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(
+    guildRanking.packageId,
+    guild.packageId,
+    guildDemo.packageId,
+    schedule.packageId,
+    scheduleDemo.packageId,
+    currency.packageId,
+    "foundation-economy-currency-demo",
+    "micro-shop-currency"
+  ),
   domainTypes: [GuildRankingReward],
   instances: [
     instance(GuildRanking, RANKING, {

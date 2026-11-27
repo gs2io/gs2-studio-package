@@ -3,12 +3,12 @@
   "name": "micro-economy-skill-tree-demo",
   "version": "0.0.1",
   "dependencies": {
-    "foundation-economy-character": "github:gs2io/gs2-studio-package",
-    "foundation-economy-character-demo": "github:gs2io/gs2-studio-package",
-    "foundation-economy-currency": "github:gs2io/gs2-studio-package",
-    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
-    "micro-economy-skill-tree": "github:gs2io/gs2-studio-package",
-    "micro-shop-currency": "github:gs2io/gs2-studio-package"
+    "foundation-economy-character": "file:../../../../foundation-economy-character/packages/foundation-economy-character",
+    "foundation-economy-character-demo": "file:../../../../foundation-economy-character/live-demo/packages/foundation-economy-character-demo",
+    "foundation-economy-currency": "file:../../../../foundation-economy-currency/packages/foundation-economy-currency",
+    "foundation-economy-currency-demo": "file:../../../../foundation-economy-currency/live-demo/packages/foundation-economy-currency-demo",
+    "micro-economy-skill-tree": "file:../../../../micro-economy-skill-tree/packages/micro-economy-skill-tree",
+    "micro-shop-currency": "file:../../../../micro-shop-currency/packages/micro-shop-currency"
   },
   "display": {
     "en": {

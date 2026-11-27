@@ -3,7 +3,7 @@
   "name": "foundation-economy-inventory-demo",
   "version": "0.0.1",
   "dependencies": {
-    "foundation-economy-inventory": "github:gs2io/gs2-studio-package"
+    "foundation-economy-inventory": "file:../../../../foundation-economy-inventory/packages/foundation-economy-inventory"
   },
   "display": {
     "en": {

@@ -3,10 +3,10 @@
   "name": "foundation-liveops-inbox-demo",
   "version": "0.0.1",
   "dependencies": {
-    "foundation-economy-currency": "github:gs2io/gs2-studio-package",
-    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
-    "foundation-liveops-inbox": "github:gs2io/gs2-studio-package",
-    "micro-shop-currency": "github:gs2io/gs2-studio-package"
+    "foundation-economy-currency": "file:../../../../foundation-economy-currency/packages/foundation-economy-currency",
+    "foundation-economy-currency-demo": "file:../../../../foundation-economy-currency/live-demo/packages/foundation-economy-currency-demo",
+    "foundation-liveops-inbox": "file:../../../../foundation-liveops-inbox/packages/foundation-liveops-inbox",
+    "micro-shop-currency": "file:../../../../micro-shop-currency/packages/micro-shop-currency"
   },
   "display": {
     "en": {

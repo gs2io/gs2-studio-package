@@ -1,35 +1,4 @@
 {
-  "entries": [
-    {
-      "commitSha": "1c7c8f602b18081aea4acdb42820cd4c8109a3fd",
-      "integrity": "sha256-JEjQ5yJbPCuIYO/QNdbDfEWCjQZzy2C4/Nle4uEzGlI=",
-      "owner": "gs2io",
-      "packageId": "foundation-economy-ad",
-      "repo": "gs2-studio-package",
-      "sourceKind": "github",
-      "subdirectory": "foundation-economy-ad/packages/foundation-economy-ad",
-      "version": "0.0.1"
-    },
-    {
-      "commitSha": "1c7c8f602b18081aea4acdb42820cd4c8109a3fd",
-      "integrity": "sha256-JEjQ5yJbPCuIYO/QNdbDfEWCjQZzy2C4/Nle4uEzGlI=",
-      "owner": "gs2io",
-      "packageId": "foundation-economy-ad-demo",
-      "repo": "gs2-studio-package",
-      "sourceKind": "github",
-      "subdirectory": "foundation-economy-ad/live-demo/packages/foundation-economy-ad-demo",
-      "version": "0.0.1"
-    },
-    {
-      "commitSha": "1c7c8f602b18081aea4acdb42820cd4c8109a3fd",
-      "integrity": "sha256-JEjQ5yJbPCuIYO/QNdbDfEWCjQZzy2C4/Nle4uEzGlI=",
-      "owner": "gs2io",
-      "packageId": "foundation-economy-limit",
-      "repo": "gs2-studio-package",
-      "sourceKind": "github",
-      "subdirectory": "foundation-economy-limit/packages/foundation-economy-limit",
-      "version": "0.0.1"
-    }
-  ],
+  "entries": [],
   "schemaVersion": 1
 }

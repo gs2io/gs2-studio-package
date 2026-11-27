@@ -16,6 +16,8 @@ import {
   UiSource,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { CHARACTER_LEVEL_KEY_PLACEHOLDER } from "../../../dsl/characterLevelKey";
@@ -135,9 +137,7 @@ export const foundationEconomyCharacterDemo = definePackage({
       description: "Supplies the roster, level curve, capacity and recruits used by the live demo.",
     },
   },
-  dependencies: {
-    [character.packageId]: "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(character.packageId),
   domainTypes: [CharacterRecruit],
   instances: [
     instance(CharacterExperience, "characterexperience", {

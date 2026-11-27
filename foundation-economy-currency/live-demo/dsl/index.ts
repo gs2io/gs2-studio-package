@@ -15,6 +15,8 @@ import {
   UiSource,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import currencySurface from "../../dsl/dependency-surface.json";
@@ -152,10 +154,7 @@ export const foundationEconomyCurrencyDemo = definePackage({
         "Supplies the live demo's setting overrides, its free currency grants, and the store shelf and prices every demo shares.",
     },
   },
-  dependencies: {
-    [CURRENCY_PACKAGE_ID]: "github:gs2io/gs2-studio-package",
-    [shop.packageId]: "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(CURRENCY_PACKAGE_ID, shop.packageId),
   domainTypes: [FreeDeposit, PaidDeposit],
   instances: [
     instance(CurrencyStore, "currencystore", {

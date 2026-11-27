@@ -12,6 +12,8 @@ import {
   UiItem,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import energySurface from "../../dsl/dependency-surface.json";
@@ -80,9 +82,7 @@ export const foundationEconomyEnergyDemo = definePackage({
         "Supplies the stamina settings used by the live demo, and the spend and recover presses.",
     },
   },
-  dependencies: {
-    [energy.packageId]: "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(energy.packageId),
   instances: [
     instance(Energy, "stamina", {
     [energy.propertyId("Energy", "defaultMaximum")]: DEFAULT_MAXIMUM,

@@ -12,6 +12,8 @@ import {
   UiItem,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import inventorySurface from "../../dsl/dependency-surface.json";
@@ -72,9 +74,7 @@ export const foundationEconomyInventoryDemo = definePackage({
         "Supplies the items used by the live demo, and the presses that gain and spend them.",
     },
   },
-  dependencies: {
-    [inventory.packageId]: "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(inventory.packageId),
   instances: [
     instance(Item, "potion", {}),
     instance(Item, "ether", {}),

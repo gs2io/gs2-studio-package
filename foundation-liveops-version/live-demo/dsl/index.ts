@@ -6,6 +6,8 @@ import {
   UiItem,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import versionSurface from "../../dsl/dependency-surface.json";
 
 const version = dependencyPackage(versionSurface);
@@ -67,9 +69,7 @@ export const foundationLiveopsVersionDemo = definePackage({
         "Supplies the live demo's required and optional agreements, the app and asset versions the client reports, and the user a player who passes is signed in as.",
     },
   },
-  dependencies: {
-    [version.packageId]: "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(version.packageId),
   instances: [
     instance(VersionGate, "versiongate", {
     [version.propertyId("VersionGate", "assumeUserId")]: PASSED_USER,

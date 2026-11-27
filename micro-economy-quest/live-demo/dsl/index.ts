@@ -11,6 +11,7 @@ import {
 } from "gs2-studio-dsl";
 
 import { jaEnField } from "../../../dsl/jaEnField";
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
 
 import questSurface from "../../dsl/dependency-surface.json";
 
@@ -148,16 +149,16 @@ export const microEconomyQuestDemo = definePackage({
         "Supplies the live demo's quest group and three quests, with the stamina each costs, the reward each pays, and a first-clear bonus.",
     },
   },
-  dependencies: {
-    [quest.packageId]: "github:gs2io/gs2-studio-package",
-    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
-    "foundation-economy-schedule-demo": "github:gs2io/gs2-studio-package",
-    [energy.packageId]: "github:gs2io/gs2-studio-package",
-    "foundation-economy-energy-demo": "github:gs2io/gs2-studio-package",
-    [currency.packageId]: "github:gs2io/gs2-studio-package",
-    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
-    "micro-shop-currency": "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(
+    quest.packageId,
+    "foundation-economy-schedule",
+    "foundation-economy-schedule-demo",
+    energy.packageId,
+    "foundation-economy-energy-demo",
+    currency.packageId,
+    "foundation-economy-currency-demo",
+    "micro-shop-currency"
+  ),
   domainTypes: [Quest],
   instances: [
     instance(QuestCollection, MAIN, {}),

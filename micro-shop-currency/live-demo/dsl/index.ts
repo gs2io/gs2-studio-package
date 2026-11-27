@@ -6,6 +6,8 @@ import {
   UiSource,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import shopSurface from "../../dsl/dependency-surface.json";
 
 import currencySurface from "../../../foundation-economy-currency/dsl/dependency-surface.json";
@@ -29,11 +31,11 @@ export const microShopCurrencyDemo = definePackage({
       description: "Puts the currency demo's shelf in front of the currency shop.",
     },
   },
-  dependencies: {
-    [shop.packageId]: "github:gs2io/gs2-studio-package",
-    [currency.packageId]: "github:gs2io/gs2-studio-package",
-    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(
+    shop.packageId,
+    currency.packageId,
+    "foundation-economy-currency-demo"
+  ),
   uiComponents: [
     defineUiComponent(StoreProduct, {
   items: [

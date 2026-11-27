@@ -6,14 +6,14 @@
     "gs2studio": ">=2026.11.12"
   },
   "dependencies": {
-    "foundation-economy-currency": "github:gs2io/gs2-studio-package",
-    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
-    "foundation-economy-energy": "github:gs2io/gs2-studio-package",
-    "foundation-economy-energy-demo": "github:gs2io/gs2-studio-package",
-    "foundation-economy-schedule": "github:gs2io/gs2-studio-package",
-    "foundation-economy-schedule-demo": "github:gs2io/gs2-studio-package",
-    "micro-economy-quest": "github:gs2io/gs2-studio-package",
-    "micro-shop-currency": "github:gs2io/gs2-studio-package"
+    "foundation-economy-currency": "file:../../../../foundation-economy-currency/packages/foundation-economy-currency",
+    "foundation-economy-currency-demo": "file:../../../../foundation-economy-currency/live-demo/packages/foundation-economy-currency-demo",
+    "foundation-economy-energy": "file:../../../../foundation-economy-energy/packages/foundation-economy-energy",
+    "foundation-economy-energy-demo": "file:../../../../foundation-economy-energy/live-demo/packages/foundation-economy-energy-demo",
+    "foundation-economy-schedule": "file:../../../../foundation-economy-schedule/packages/foundation-economy-schedule",
+    "foundation-economy-schedule-demo": "file:../../../../foundation-economy-schedule/live-demo/packages/foundation-economy-schedule-demo",
+    "micro-economy-quest": "file:../../../../micro-economy-quest/packages/micro-economy-quest",
+    "micro-shop-currency": "file:../../../../micro-shop-currency/packages/micro-shop-currency"
   },
   "display": {
     "en": {

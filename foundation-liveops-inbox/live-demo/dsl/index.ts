@@ -16,6 +16,8 @@ import {
   UiSource,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import { jaEnField, jaEnId } from "../../../dsl/jaEnField";
@@ -126,12 +128,12 @@ export const foundationLiveopsInboxDemo = definePackage({
         "Supplies the announcement used by the live demo, and the press that delivers it to your own inbox.",
     },
   },
-  dependencies: {
-    [inbox.packageId]: "github:gs2io/gs2-studio-package",
-    [currency.packageId]: "github:gs2io/gs2-studio-package",
-    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
-    "micro-shop-currency": "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(
+    inbox.packageId,
+    currency.packageId,
+    "foundation-economy-currency-demo",
+    "micro-shop-currency"
+  ),
   domainTypes: [Gift],
   instances: [
     instance(GlobalMessage, "welcome", {

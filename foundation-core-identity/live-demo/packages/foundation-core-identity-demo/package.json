@@ -3,7 +3,7 @@
   "name": "foundation-core-identity-demo",
   "version": "0.0.1",
   "dependencies": {
-    "foundation-core-identity": "github:gs2io/gs2-studio-package"
+    "foundation-core-identity": "file:../../../../foundation-core-identity/packages/foundation-core-identity"
   },
   "display": {
     "en": {

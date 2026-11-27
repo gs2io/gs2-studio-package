@@ -6,6 +6,8 @@ import {
   UiSource,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import identitySurface from "../../dsl/dependency-surface.json";
 
 const identity = dependencyPackage(identitySurface);
@@ -25,9 +27,7 @@ export const foundationCoreIdentityDemo = definePackage({
       description: "Supplies what the live demo shows of a transfer code.",
     },
   },
-  dependencies: {
-    [identity.packageId]: "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(identity.packageId),
   uiComponents: [
     defineUiComponent(TransferCode, {
   items: [

@@ -15,6 +15,8 @@ import {
   UiItem,
 } from "gs2-studio-dsl";
 
+import { liveDemoDependencies } from "../../../dsl/liveDemoDependencies";
+
 import { GS2 } from "gs2-studio-dsl/gs2";
 
 import serialCodeSurface from "../../dsl/dependency-surface.json";
@@ -189,12 +191,12 @@ export const microLiveopsSerialCodeDemo = definePackage({
         "Supplies the live demo's one campaign code and the redemption that pays coins for it, once per visitor. The coins land in the currency package's wallet.",
     },
   },
-  dependencies: {
-    [serialCode.packageId]: "github:gs2io/gs2-studio-package",
-    [currency.packageId]: "github:gs2io/gs2-studio-package",
-    "foundation-economy-currency-demo": "github:gs2io/gs2-studio-package",
-    "micro-shop-currency": "github:gs2io/gs2-studio-package",
-  },
+  dependencies: liveDemoDependencies(
+    serialCode.packageId,
+    currency.packageId,
+    "foundation-economy-currency-demo",
+    "micro-shop-currency"
+  ),
   domainTypes: [SerialCodeRedemption],
   instances: [
     instance(SerialCodeCampaign, CAMPAIGN_CODE, {
