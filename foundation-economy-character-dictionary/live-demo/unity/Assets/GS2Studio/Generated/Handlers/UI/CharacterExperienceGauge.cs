@@ -115,8 +115,10 @@ namespace GS2Studio.Generated.Character.UI
             var max = ResolveMaxBand(model);
             var min = ResolveMinBand(model);
             var span = max - min;
-            var fraction = span > 0d ? (current - min) / span : 0d;            if (fraction < 0d) fraction = 0d;
-            else if (fraction > 1d) fraction = 1d;            _target.fillAmount = (float)fraction;
+            var fraction = span > 0d ? (current - min) / span : 0d;
+            if (fraction < 0d) fraction = 0d;
+            else if (fraction > 1d) fraction = 1d;
+            _target.fillAmount = (float)fraction;
         }
 
         // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.

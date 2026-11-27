@@ -77,8 +77,10 @@ namespace GS2Studio.Generated.EquipmentCollection.UI
             }
             var current = System.Convert.ToDouble(model.CurrentCapacityUsage, System.Globalization.CultureInfo.InvariantCulture);
             var max = System.Convert.ToDouble(model.CurrentMaximumCapacity, System.Globalization.CultureInfo.InvariantCulture);
-            var fraction = max > 0d ? current / max : 0d;            if (fraction < 0d) fraction = 0d;
-            else if (fraction > 1d) fraction = 1d;            _target.fillAmount = (float)fraction;
+            var fraction = max > 0d ? current / max : 0d;
+            if (fraction < 0d) fraction = 0d;
+            else if (fraction > 1d) fraction = 1d;
+            _target.fillAmount = (float)fraction;
         }
     }
 }

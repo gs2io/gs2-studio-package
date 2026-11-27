@@ -82,8 +82,10 @@ namespace GS2Studio.Generated.Energy.UI
             }
             var current = System.Convert.ToDouble(model.CurrentValue, System.Globalization.CultureInfo.InvariantCulture);
             var max = System.Convert.ToDouble(model.CurrentMaximumValue, System.Globalization.CultureInfo.InvariantCulture);
-            var fraction = max > 0d ? current / max : 0d;            if (fraction < 0d) fraction = 0d;
-            else if (fraction > 1d) fraction = 1d;            _target.fillAmount = (float)fraction;
+            var fraction = max > 0d ? current / max : 0d;
+            if (fraction < 0d) fraction = 0d;
+            else if (fraction > 1d) fraction = 1d;
+            _target.fillAmount = (float)fraction;
         }
 
         // A diagnostic must not blank components that combine available readings with defaults from skipped loaders.
