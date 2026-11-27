@@ -58,6 +58,7 @@
       ]
     }
   ],
+  "locales": [],
   "components": [
     {
       "className": "LoginRewardCollectionLastReceivedLabel",
@@ -68,6 +69,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -79,6 +81,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "activeWhenTrue",
@@ -99,6 +102,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -110,6 +114,7 @@
       "valueType": "",
       "reportsFailure": true,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "button",
@@ -126,6 +131,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "activeWhenTrue",
@@ -146,6 +152,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -157,6 +164,7 @@
       "valueType": "",
       "reportsFailure": true,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "button",

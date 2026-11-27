@@ -59,6 +59,7 @@
       ]
     }
   ],
+  "locales": [],
   "components": [
     {
       "className": "CharacterEnhanceMaterialGetButton",
@@ -69,6 +70,7 @@
       "valueType": "",
       "reportsFailure": true,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "button",
@@ -85,6 +87,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     }
   ]

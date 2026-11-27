@@ -40,6 +40,7 @@
       ]
     }
   ],
+  "locales": [],
   "components": [
     {
       "className": "CharacterRecruitCharacterLabel",
@@ -50,6 +51,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -61,6 +63,7 @@
       "valueType": "",
       "reportsFailure": true,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "button",

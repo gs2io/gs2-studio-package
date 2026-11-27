@@ -82,6 +82,7 @@
       ]
     }
   ],
+  "locales": [],
   "components": [
     {
       "className": "CharacterEnhanceWithElixirButton",
@@ -92,6 +93,7 @@
       "valueType": "",
       "reportsFailure": true,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "button",
@@ -108,6 +110,7 @@
       "valueType": "",
       "reportsFailure": true,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "button",
@@ -124,6 +127,12 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [
+        {
+          "typeName": "CharacterExperience",
+          "rowId": ""
+        }
+      ],
       "serializedFields": [
         {
           "role": "target",
@@ -140,6 +149,7 @@
       "valueType": "string",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -151,6 +161,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "activeWhenTrue",
@@ -171,6 +182,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "interactableWhenTrue",
@@ -191,6 +203,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -202,6 +215,7 @@
       "valueType": "string",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -213,6 +227,7 @@
       "valueType": "",
       "reportsFailure": true,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "button",

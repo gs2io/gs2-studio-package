@@ -19,6 +19,7 @@
   "listAxes": [],
   "mountFields": [],
   "keyValues": [],
+  "locales": [],
   "components": [
     {
       "className": "PaidDepositCountLabel",
@@ -29,6 +30,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -40,6 +42,7 @@
       "valueType": "",
       "reportsFailure": true,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "button",

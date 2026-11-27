@@ -29,7 +29,15 @@
     }
   ],
   "mountFields": [],
-  "keyValues": [],
+  "keyValues": [
+    {
+      "fieldName": "_slot",
+      "values": [
+        "0"
+      ]
+    }
+  ],
+  "locales": [],
   "components": [
     {
       "className": "WalletFreeBalanceLabel",
@@ -40,6 +48,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -51,6 +60,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -62,6 +72,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     }
   ]

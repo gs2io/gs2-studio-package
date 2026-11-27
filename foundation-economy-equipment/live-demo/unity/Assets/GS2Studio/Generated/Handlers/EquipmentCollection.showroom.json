@@ -19,6 +19,7 @@
   "listAxes": [],
   "mountFields": [],
   "keyValues": [],
+  "locales": [],
   "components": [
     {
       "className": "EquipmentCollectionCapacityGauge",
@@ -29,6 +30,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "target",
@@ -45,6 +47,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -56,6 +59,7 @@
       "valueType": "",
       "reportsFailure": true,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "button",
@@ -72,6 +76,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "interactableWhenTrue",
@@ -92,6 +97,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "activeWhenTrue",
@@ -112,6 +118,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "activeWhenTrue",
@@ -132,6 +139,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     }
   ]

@@ -19,6 +19,7 @@
   "listAxes": [],
   "mountFields": [],
   "keyValues": [],
+  "locales": [],
   "components": [
     {
       "className": "BuffCampaignEndCampaignButton",
@@ -29,6 +30,7 @@
       "valueType": "",
       "reportsFailure": true,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "button",
@@ -45,6 +47,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -56,6 +59,7 @@
       "valueType": "",
       "reportsFailure": true,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "button",

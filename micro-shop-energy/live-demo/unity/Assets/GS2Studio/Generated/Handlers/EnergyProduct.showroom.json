@@ -52,6 +52,7 @@
       ]
     }
   ],
+  "locales": [],
   "components": [
     {
       "className": "EnergyProductBuyButton",
@@ -62,6 +63,7 @@
       "valueType": "",
       "reportsFailure": true,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "button",
@@ -78,6 +80,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     }
   ]

@@ -50,6 +50,7 @@
       ]
     }
   ],
+  "locales": [],
   "components": [
     {
       "className": "GlobalMessageDeliverButton",
@@ -60,6 +61,7 @@
       "valueType": "",
       "reportsFailure": true,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "button",

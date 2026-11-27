@@ -56,6 +56,7 @@
       ]
     }
   ],
+  "locales": [],
   "components": [
     {
       "className": "SkillNodeReleasedActiveToggle",
@@ -66,6 +67,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "activeWhenTrue",
@@ -86,6 +88,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "activeWhenTrue",

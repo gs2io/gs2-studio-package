@@ -58,6 +58,7 @@
       ]
     }
   ],
+  "locales": [],
   "components": [
     {
       "className": "LoginRewardDayLabel",
@@ -68,6 +69,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -79,6 +81,12 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [
+        {
+          "typeName": "LoginRewardCollection",
+          "rowId": ""
+        }
+      ],
       "serializedFields": [
         {
           "role": "activeWhenTrue",
@@ -99,6 +107,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -110,6 +119,12 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [
+        {
+          "typeName": "LoginRewardCollection",
+          "rowId": ""
+        }
+      ],
       "serializedFields": [
         {
           "role": "activeWhenTrue",

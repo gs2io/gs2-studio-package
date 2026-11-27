@@ -30,6 +30,7 @@
   ],
   "mountFields": [],
   "keyValues": [],
+  "locales": [],
   "components": [
     {
       "className": "MessageOpenButton",
@@ -40,6 +41,7 @@
       "valueType": "",
       "reportsFailure": true,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "button",
@@ -56,6 +58,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -67,6 +70,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -78,6 +82,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "activeWhenTrue",
@@ -98,6 +103,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": [
         {
           "role": "activeWhenTrue",

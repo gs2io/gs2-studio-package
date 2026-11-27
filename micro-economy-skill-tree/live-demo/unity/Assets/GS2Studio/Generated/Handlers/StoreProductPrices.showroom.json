@@ -30,6 +30,7 @@
   "listAxes": [],
   "mountFields": [],
   "keyValues": [],
+  "locales": [],
   "components": [
     {
       "className": "StoreProductPricesPriceLabel",
@@ -40,6 +41,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -51,6 +53,7 @@
       "valueType": "double",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     }
   ]

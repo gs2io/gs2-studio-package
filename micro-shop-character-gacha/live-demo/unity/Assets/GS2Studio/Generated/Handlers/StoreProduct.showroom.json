@@ -63,6 +63,7 @@
       ]
     }
   ],
+  "locales": [],
   "components": [
     {
       "className": "StoreProductAppleAppStoreProductIdValue",
@@ -73,6 +74,7 @@
       "valueType": "string",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -84,6 +86,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -95,6 +98,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -106,6 +110,7 @@
       "valueType": "int",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -117,6 +122,7 @@
       "valueType": "string",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     },
     {
@@ -128,6 +134,7 @@
       "valueType": "string",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     }
   ]

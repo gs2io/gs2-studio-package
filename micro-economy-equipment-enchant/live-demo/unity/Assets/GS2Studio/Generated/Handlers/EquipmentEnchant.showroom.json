@@ -37,6 +37,7 @@
       ]
     }
   ],
+  "locales": [],
   "components": [
     {
       "className": "EquipmentEnchantRuleLabel",
@@ -47,6 +48,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     }
   ]

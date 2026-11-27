@@ -79,6 +79,7 @@
       ]
     }
   ],
+  "locales": [],
   "components": [
     {
       "className": "GuildRankingRuleLabel",
@@ -89,6 +90,7 @@
       "valueType": "",
       "reportsFailure": false,
       "fixedText": false,
+      "reads": [],
       "serializedFields": []
     }
   ]
