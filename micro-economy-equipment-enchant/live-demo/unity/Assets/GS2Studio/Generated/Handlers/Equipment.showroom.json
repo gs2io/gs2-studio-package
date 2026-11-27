@@ -87,6 +87,16 @@
       "serializedType": "string"
     }
   ],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "iron-sword",
+        "oak-staff",
+        "steel-shield"
+      ]
+    }
+  ],
   "components": [
     {
       "className": "EquipmentAddBonusButton",
@@ -96,6 +106,7 @@
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "button",
@@ -111,6 +122,7 @@
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "button",
@@ -126,6 +138,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -136,6 +149,7 @@
       "kind": "value",
       "valueType": "string",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -146,6 +160,7 @@
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "button",

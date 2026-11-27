@@ -11,8 +11,9 @@ folder of the package DSL directory (`dsl init` writes it).
 - `Handlers/<Type>Handler.cs`, `<Type>ListHandler.cs`, `<Type>ListBy<Property>Handler.cs`: hold the rows of a type.
 - `Handlers/UI/<Type><Item>.cs`: one component per UI item of the DSL (label, template label, value, countdown, image,
   gauge, button action, active toggle, interactable).
-- `Handlers/<Type>.showroom.json`: the handler classes of a type, their Inspector fields, and each UI component
-  class with its kind and the fields to fill. Read it instead of guessing field names.
+- `Handlers/<Type>.showroom.json`: the handler classes of a type, their Inspector fields, the values this project
+  gives its key fields (`keyValues`), and each UI component class with its kind and the fields to fill. Read it
+  instead of guessing field names.
 - `Runtime/Gs2StudioAccount.cs`: the GS2-Account namespace the project deploys (see "Sign-in").
 
 ## Scene
@@ -22,21 +23,28 @@ One GameObject at the scene root (such as `GS2`) holds:
 1. `Gs2ClientHolder` (Add Component > GS2/Core). Add `Assets/GS2Studio/Gs2Environment.asset`, which
    `deploy unity-environment` writes, to Environments, and set Active Environment Name to the asset's `name`
    field (`GS2Studio` unless `deploy unity-environment --name` set another), not its file name. Wire its `onError`
-   to its own `DebugErrorHandler`, which logs GS2 errors; without a listener they are not logged.
+   (an internal field: in the Inspector, or as a serialized property) to its own
+   `DebugErrorHandler(Gs2Exception, Func<IEnumerator>)`, which logs GS2 errors; without a listener they are not logged.
 2. `Gs2GameSessionHolder` (GS2/Core).
-3. `Gs2AutoLoginAction` (GS2/Account/AutoLogin), which signs in (see "Sign-in"); wire its `onError` too.
+3. `Gs2AutoLoginAction` (GS2/Account/AutoLogin), which signs in (see "Sign-in"). For testing, wire its `onError`,
+   and any other GS2 UIKit component's, to `Gs2ClientHolder.DebugErrorHandler`, which only logs: it never runs the
+   retry it is given, so sign-in stops at an error. A game's own listener shows the error and can retry with
+   `StartCoroutine(retry())`.
 4. `Gs2HolderRuntimeContextProvider` (GS2 Studio/Runtime), through which the handlers reach the holders.
 
 Then:
 
 - Put each `<Type>Handler` on an ancestor of every component that reads it, typically the page root. A component
   uses the nearest `<Type>HandlerBase` above it, and without one it logs a warning and does nothing. A condition
-  on another type's row reads every `<Type>Handler` above it. A single-entry type's handler takes no row id.
-  REFERENCE.md "Rows in the game" and "Another type's row".
+  on another type's row reads every `<Type>Handler` above it. A single-entry type's handler takes no row id; what
+  the others take is under "This project". REFERENCE.md "Rows in the game" and "Another type's row".
 - A list is a `<Type>ListHandler` with `_itemPrefab` (a prefab with a `<Type>ListItemHandler` at its root
   and the row's components below it) and `_contentParent`; set `_axis` when the type has one.
 - The scene needs an `EventSystem` whose input module matches Player Settings > Active Input Handling
   (`InputSystemUIInputModule` for the Input System package).
+- A `Canvas` added as a component starts in World Space: set Screen Space - Overlay (or Camera), and add a
+  `CanvasScaler` and a `GraphicRaycaster`, without which no Button gets clicks. After reparenting UI objects
+  under a Canvas, make sure their localScale is 1.
 
 ## Wiring
 
@@ -49,7 +57,10 @@ Then:
 - An image component loads nothing: implement `partial void ApplyImage(Image target, string reference)` in your
   own part of its class.
 - A gauge sets `fillAmount` of its target `Image`, which shows only when the Image Type is Filled and the Image
-  has a Source Image (any sprite, such as a white one); otherwise the gauge warns once in the Console.
+  has a Source Image; otherwise the gauge warns once in the Console. Use a sprite that is white to its edges with no
+  border, such as a small white texture imported as Sprite (2D and UI). A fill stretches the border and soft edges of
+  a sprite made for Sliced, such as the built-in `UISprite`, and blurs.
+- A button action logs its own failures, so its `OnFailed` (the `onError` signature) is for the game's error UI.
 - Show the time left until a timestamp (a stamina's next recovery) with the generated countdown
   (`UiItem.countdown`), not a hand-written timer: it counts on the GS2 session's clock. While there is no time,
   such as at full stamina, it sends the item's `fallbackText`, or empty text when the DSL sets none.
@@ -79,12 +90,15 @@ Then:
   `com.unity.localization` installed, it follows that package's selected locale. REFERENCE.md "Localized text".
 - `Gs2Locale.Current` starts from the device language and can be a regional tag such as `ja-JP`: compare its
   language prefix, not the whole tag.
-- Fixed text, such as headings and button captions, can come from a `UiItem.templateLabel` whose template is text
-  per locale with no placeholders: its generated component sends the text for `Gs2Locale.Current` without waiting
-  for a row and again on `Gs2Locale.Changed`. Wire its `OnUpdate` to the Text as for any label, instead of a
-  hand-written localization script. Like every generated component it needs the type's handler on its GameObject or
-  an ancestor, so put headings under that handler too. REFERENCE.md "Localized templates". Other fixed text is the
-  game's to localize.
+- A Button's `onClick` cannot call the static `Gs2Locale.Set`. Add a component such as
+  `public class LocaleSwitch : MonoBehaviour { public void Set(string locale) => Gs2Locale.Set(locale); }` and
+  wire `onClick` to its `Set` with the locale as the argument.
+- Fixed text, such as headings and button captions, comes from a `UiItem.templateLabel` whose template is text per
+  locale with no placeholders, when the DSL declares one ("This project" lists them): its generated component sends
+  the text for `Gs2Locale.Current` without waiting for a row and again on `Gs2Locale.Changed`. Wire its
+  `OnUpdate` to the Text as for any label, and put it under its type's handler like every generated component.
+  REFERENCE.md "Localized templates". Other fixed text is the game's to localize, or the user can add such a
+  template label to the DSL.
 
 ## Verify
 
@@ -95,3 +109,24 @@ Then:
    `_target` or `_button` logs nothing.
 3. Look at the screen (a screenshot), not only at the values the components send: an unwired event, an empty
    target or a gauge without a sprite shows nothing.
+
+## This project
+
+Handler fields to set, each with the values the project's rows hold for it. A field naming another type's row (such as
+a quest's `_collection`) takes an id listed for that type's handler; a key the actions pass, such as a wallet's
+`_slot`, takes the value the DSL's action transforms give it (REFERENCE.md "Rows in the game"). Ask the user when
+unsure.
+
+- `CurrencyTypeHandler`: `_id` = `JPY` or `USD` or `XXX`
+- `RankingHandler`: `_id` = `contest`
+- `RankingListHandler`: `_rankingName`, `_season`
+- `RankingRewardHandler`: `_ranking`, `_thresholdRank`
+- `ScheduleHandler`: `_id` = `closed-season` or `guild-season` or `happy-hour` or `open-season` or `ranking-contest`, `_trigger` = `happy-hour` or `ranking-contest`
+- `StoreProductHandler`: `_id` = `coin_large` or `coin_medium` or `coin_small`
+- `StoreProductListHandler`: `_showcaseName`
+- `StoreProductPricesHandler`: `_storeProduct`, `_currencyType`
+- `TriggerHandler`: `_id` = `happy-hour`
+- `TriggerPullHandler`: `_id` = `happy-hour`
+- `WalletHandler`: `_slot`
+
+No template label of this project is fixed text, so the game supplies its headings (see "Language").

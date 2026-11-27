@@ -42,6 +42,16 @@
     }
   ],
   "mountFields": [],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "refill_large",
+        "refill_medium",
+        "refill_small"
+      ]
+    }
+  ],
   "components": [
     {
       "className": "EnergyProductBuyButton",
@@ -51,6 +61,7 @@
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "button",
@@ -66,6 +77,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     }
   ]

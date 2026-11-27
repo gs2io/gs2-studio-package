@@ -73,7 +73,7 @@ namespace GS2Studio.Generated.EquipmentCollection.UI
                 _warnedUnfilledTarget = true;
                 Debug.LogWarning(
                     $"{nameof(EquipmentCollectionCapacityGauge)} on '{name}': the target Image '{_target.name}' does not show its fill; " +
-                    "set its Image Type to Filled and give it a Source Image (any sprite, such as a white one).", this);
+                    "set its Image Type to Filled and give it a Source Image that is white to its edges with no border.", this);
             }
             var current = System.Convert.ToDouble(model.CurrentCapacityUsage, System.Globalization.CultureInfo.InvariantCulture);
             var max = System.Convert.ToDouble(model.CurrentMaximumCapacity, System.Globalization.CultureInfo.InvariantCulture);

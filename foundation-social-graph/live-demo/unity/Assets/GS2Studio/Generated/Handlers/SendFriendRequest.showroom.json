@@ -29,6 +29,7 @@
     }
   ],
   "mountFields": [],
+  "keyValues": [],
   "components": [
     {
       "className": "SendFriendRequestIdLabel",
@@ -38,6 +39,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     }
   ]

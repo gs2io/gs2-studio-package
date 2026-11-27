@@ -71,6 +71,14 @@
       "serializedType": "long"
     }
   ],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "guild"
+      ]
+    }
+  ],
   "components": [
     {
       "className": "GuildRankingRuleLabel",
@@ -80,6 +88,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     }
   ]

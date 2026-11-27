@@ -58,6 +58,14 @@
     }
   ],
   "mountFields": [],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "stamina"
+      ]
+    }
+  ],
   "components": [
     {
       "className": "EnergyFullActiveToggle",
@@ -67,6 +75,7 @@
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "activeWhenTrue",
@@ -86,6 +95,7 @@
       "kind": "countdown",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -96,6 +106,7 @@
       "kind": "value",
       "valueType": "DateTime",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -106,6 +117,7 @@
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "button",
@@ -121,6 +133,7 @@
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "button",
@@ -136,6 +149,7 @@
       "kind": "gauge",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "target",
@@ -151,6 +165,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     }
   ]

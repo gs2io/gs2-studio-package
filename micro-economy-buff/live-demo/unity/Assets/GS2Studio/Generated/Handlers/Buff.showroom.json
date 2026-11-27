@@ -29,5 +29,13 @@
     }
   ],
   "mountFields": [],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "double-idle"
+      ]
+    }
+  ],
   "components": []
 }

@@ -29,6 +29,7 @@
   "listAxisMembers": [],
   "listAxes": [],
   "mountFields": [],
+  "keyValues": [],
   "components": [
     {
       "className": "StoreProductPricesPriceLabel",
@@ -38,6 +39,7 @@
       "kind": "label",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -48,6 +50,7 @@
       "kind": "value",
       "valueType": "double",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     }
   ]

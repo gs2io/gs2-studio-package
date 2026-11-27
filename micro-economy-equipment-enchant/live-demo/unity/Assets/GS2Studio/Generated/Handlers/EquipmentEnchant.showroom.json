@@ -29,6 +29,14 @@
     }
   ],
   "mountFields": [],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "standard"
+      ]
+    }
+  ],
   "components": [
     {
       "className": "EquipmentEnchantRuleLabel",
@@ -38,6 +46,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     }
   ]

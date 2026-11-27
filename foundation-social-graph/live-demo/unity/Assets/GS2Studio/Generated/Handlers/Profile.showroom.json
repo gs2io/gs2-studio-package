@@ -24,6 +24,7 @@
   "listAxisMembers": [],
   "listAxes": [],
   "mountFields": [],
+  "keyValues": [],
   "components": [
     {
       "className": "ProfileFollowerProfileLabel",
@@ -33,6 +34,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -43,6 +45,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -53,6 +56,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     }
   ]

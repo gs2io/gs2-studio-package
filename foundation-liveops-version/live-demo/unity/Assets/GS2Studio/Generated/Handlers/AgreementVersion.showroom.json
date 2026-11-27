@@ -42,6 +42,15 @@
     }
   ],
   "mountFields": [],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "marketing",
+        "terms"
+      ]
+    }
+  ],
   "components": [
     {
       "className": "AgreementVersionRuleLabel",
@@ -51,6 +60,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     }
   ]

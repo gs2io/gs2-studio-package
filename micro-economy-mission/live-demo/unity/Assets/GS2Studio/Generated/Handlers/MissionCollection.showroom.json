@@ -42,5 +42,14 @@
     }
   ],
   "mountFields": [],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "career",
+        "daily"
+      ]
+    }
+  ],
   "components": []
 }

@@ -74,6 +74,24 @@
       "serializedType": "string"
     }
   ],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "counter1",
+        "counter2",
+        "counter3",
+        "counter4"
+      ]
+    },
+    {
+      "fieldName": "_limit",
+      "values": [
+        "daily",
+        "weekly"
+      ]
+    }
+  ],
   "components": [
     {
       "className": "UsageLimitCounterAdUsesUnavailableActiveToggle",
@@ -83,6 +101,7 @@
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "activeWhenTrue",
@@ -102,6 +121,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -112,6 +132,7 @@
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "activeWhenTrue",
@@ -131,6 +152,7 @@
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "activeWhenTrue",
@@ -150,6 +172,7 @@
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "activeWhenTrue",
@@ -169,6 +192,7 @@
       "kind": "value",
       "valueType": "DateTime",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -179,6 +203,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -189,6 +214,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -199,6 +225,7 @@
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "button",
@@ -214,6 +241,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -224,6 +252,7 @@
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "button",
@@ -239,6 +268,7 @@
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "button",

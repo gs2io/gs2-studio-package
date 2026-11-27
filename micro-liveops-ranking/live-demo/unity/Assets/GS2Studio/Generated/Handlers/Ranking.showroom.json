@@ -62,5 +62,13 @@
       "serializedType": "long"
     }
   ],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "contest"
+      ]
+    }
+  ],
   "components": []
 }

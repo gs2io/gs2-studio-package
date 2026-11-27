@@ -29,6 +29,7 @@
     }
   ],
   "mountFields": [],
+  "keyValues": [],
   "components": [
     {
       "className": "FollowFollowerProfileLabel",
@@ -38,6 +39,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -48,6 +50,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     }
   ]

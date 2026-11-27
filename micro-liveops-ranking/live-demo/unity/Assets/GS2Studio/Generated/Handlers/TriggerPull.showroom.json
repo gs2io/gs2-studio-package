@@ -29,6 +29,14 @@
     }
   ],
   "mountFields": [],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "happy-hour"
+      ]
+    }
+  ],
   "components": [
     {
       "className": "TriggerPullNameLabel",
@@ -38,6 +46,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -48,6 +57,7 @@
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "button",

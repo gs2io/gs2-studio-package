@@ -29,5 +29,14 @@
   "listAxisMembers": [],
   "listAxes": [],
   "mountFields": [],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "apple",
+        "google"
+      ]
+    }
+  ],
   "components": []
 }

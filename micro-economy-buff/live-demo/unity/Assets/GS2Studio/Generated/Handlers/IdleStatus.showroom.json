@@ -18,6 +18,7 @@
   "listAxisMembers": [],
   "listAxes": [],
   "mountFields": [],
+  "keyValues": [],
   "components": [
     {
       "className": "IdleStatusReceiveButton",
@@ -27,6 +28,7 @@
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "button",
@@ -42,6 +44,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     }
   ]

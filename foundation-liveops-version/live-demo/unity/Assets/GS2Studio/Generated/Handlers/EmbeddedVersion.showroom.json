@@ -29,5 +29,14 @@
     }
   ],
   "mountFields": [],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "app",
+        "asset"
+      ]
+    }
+  ],
   "components": []
 }

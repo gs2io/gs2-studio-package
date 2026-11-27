@@ -29,6 +29,15 @@
     }
   ],
   "mountFields": [],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "daily",
+        "weekly"
+      ]
+    }
+  ],
   "components": [
     {
       "className": "UsageLimitNotWeeklyActiveToggle",
@@ -38,6 +47,7 @@
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "activeWhenTrue",
@@ -57,6 +67,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -67,6 +78,7 @@
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "activeWhenTrue",
@@ -86,6 +98,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     }
   ]

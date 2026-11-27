@@ -29,6 +29,7 @@
     }
   ],
   "mountFields": [],
+  "keyValues": [],
   "components": [
     {
       "className": "WalletFreeBalanceLabel",
@@ -38,6 +39,7 @@
       "kind": "label",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -48,6 +50,7 @@
       "kind": "label",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -58,6 +61,7 @@
       "kind": "label",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     }
   ]

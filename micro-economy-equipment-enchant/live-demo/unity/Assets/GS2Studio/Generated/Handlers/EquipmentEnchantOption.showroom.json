@@ -24,5 +24,18 @@
   "listAxisMembers": [],
   "listAxes": [],
   "mountFields": [],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "attack",
+        "critical",
+        "defense",
+        "hp",
+        "luck",
+        "speed"
+      ]
+    }
+  ],
   "components": []
 }

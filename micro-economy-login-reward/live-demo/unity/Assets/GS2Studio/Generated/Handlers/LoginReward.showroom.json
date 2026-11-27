@@ -50,6 +50,14 @@
       "serializedType": "string"
     }
   ],
+  "keyValues": [
+    {
+      "fieldName": "_loginRewardCollection",
+      "values": [
+        "daily"
+      ]
+    }
+  ],
   "components": [
     {
       "className": "LoginRewardDayLabel",
@@ -59,6 +67,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -69,6 +78,7 @@
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "activeWhenTrue",
@@ -88,6 +98,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -98,6 +109,7 @@
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "activeWhenTrue",

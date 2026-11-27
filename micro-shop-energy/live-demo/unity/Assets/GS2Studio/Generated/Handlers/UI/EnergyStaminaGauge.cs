@@ -78,7 +78,7 @@ namespace GS2Studio.Generated.Energy.UI
                 _warnedUnfilledTarget = true;
                 Debug.LogWarning(
                     $"{nameof(EnergyStaminaGauge)} on '{name}': the target Image '{_target.name}' does not show its fill; " +
-                    "set its Image Type to Filled and give it a Source Image (any sprite, such as a white one).", this);
+                    "set its Image Type to Filled and give it a Source Image that is white to its edges with no border.", this);
             }
             var current = System.Convert.ToDouble(model.CurrentValue, System.Globalization.CultureInfo.InvariantCulture);
             var max = System.Convert.ToDouble(model.CurrentMaximumValue, System.Globalization.CultureInfo.InvariantCulture);

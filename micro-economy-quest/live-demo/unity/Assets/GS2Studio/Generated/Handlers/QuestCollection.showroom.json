@@ -42,5 +42,13 @@
     }
   ],
   "mountFields": [],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "main"
+      ]
+    }
+  ],
   "components": []
 }

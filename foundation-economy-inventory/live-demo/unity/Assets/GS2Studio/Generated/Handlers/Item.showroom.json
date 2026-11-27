@@ -58,6 +58,16 @@
     }
   ],
   "mountFields": [],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "elixir",
+        "ether",
+        "potion"
+      ]
+    }
+  ],
   "components": [
     {
       "className": "ItemCountValue",
@@ -67,6 +77,7 @@
       "kind": "value",
       "valueType": "long",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -77,6 +88,7 @@
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "button",
@@ -92,6 +104,7 @@
       "kind": "interactable",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "interactableWhenTrue",
@@ -111,6 +124,7 @@
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "button",
@@ -126,6 +140,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     }
   ]

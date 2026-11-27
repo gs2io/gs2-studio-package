@@ -24,5 +24,15 @@
   "listAxisMembers": [],
   "listAxes": [],
   "mountFields": [],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "one",
+        "three",
+        "two"
+      ]
+    }
+  ],
   "components": []
 }

@@ -18,6 +18,7 @@
   "listAxisMembers": [],
   "listAxes": [],
   "mountFields": [],
+  "keyValues": [],
   "components": [
     {
       "className": "CharacterCollectionNoneYetLabel",
@@ -27,6 +28,7 @@
       "kind": "label",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -37,6 +39,7 @@
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "activeWhenTrue",
@@ -56,6 +59,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     }
   ]

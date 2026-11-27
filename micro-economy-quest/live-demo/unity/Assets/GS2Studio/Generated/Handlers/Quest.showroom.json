@@ -45,6 +45,22 @@
       "serializedType": "string"
     }
   ],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "quest1",
+        "quest2",
+        "quest3"
+      ]
+    },
+    {
+      "fieldName": "_collection",
+      "values": [
+        "main"
+      ]
+    }
+  ],
   "components": [
     {
       "className": "QuestBriefLabel",
@@ -54,6 +70,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -64,6 +81,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -74,6 +92,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -84,6 +103,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -94,6 +114,7 @@
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "button",
@@ -109,6 +130,7 @@
       "kind": "interactable",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "interactableWhenTrue",
@@ -128,6 +150,7 @@
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "activeWhenTrue",

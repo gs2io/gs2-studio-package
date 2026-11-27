@@ -29,6 +29,17 @@
     }
   ],
   "mountFields": [],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "archer",
+        "healer",
+        "knight",
+        "mage"
+      ]
+    }
+  ],
   "components": [
     {
       "className": "CharacterRecruitCharacterLabel",
@@ -38,6 +49,7 @@
       "kind": "templateLabel",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": []
     },
     {
@@ -48,6 +60,7 @@
       "kind": "buttonAction",
       "valueType": "",
       "reportsFailure": true,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "button",

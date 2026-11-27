@@ -45,6 +45,17 @@
       "serializedType": "string"
     }
   ],
+  "keyValues": [
+    {
+      "fieldName": "_id",
+      "values": [
+        "first",
+        "last",
+        "left",
+        "right"
+      ]
+    }
+  ],
   "components": [
     {
       "className": "SkillNodeReleasedActiveToggle",
@@ -54,6 +65,7 @@
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "activeWhenTrue",
@@ -73,6 +85,7 @@
       "kind": "activeToggle",
       "valueType": "",
       "reportsFailure": false,
+      "fixedText": false,
       "serializedFields": [
         {
           "role": "activeWhenTrue",
