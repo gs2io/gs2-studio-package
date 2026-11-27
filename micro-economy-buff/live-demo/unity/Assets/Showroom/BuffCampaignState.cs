@@ -58,15 +58,15 @@ namespace GS2Studio.Showroom.Demo
 
         public bool Active { get; private set; }
 
+        // On GS2's clock, as ShowroomCountdown counts; the open check shifts it onto the device clock by the account offset.
         public DateTime? EndsAt
         {
             get
             {
                 if (_triggerExpiresAt <= 0) return null;
                 if (!DemoTimeOffset.TryGet(_userId, out var offset)) return null;
-                var ends = DateTimeOffset.FromUnixTimeMilliseconds(_triggerExpiresAt).UtcDateTime
-                    .AddSeconds(-offset);
-                return ends > DateTime.UtcNow ? ends : null;
+                var ends = DateTimeOffset.FromUnixTimeMilliseconds(_triggerExpiresAt).UtcDateTime;
+                return ends.AddSeconds(-offset) > DateTime.UtcNow ? ends : null;
             }
         }
 

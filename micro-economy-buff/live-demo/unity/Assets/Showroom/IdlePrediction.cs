@@ -68,7 +68,7 @@ namespace GS2Studio.Showroom.Demo
             }
         }
 
-        /// <summary>Leave the countdown unset when the start is unknown or the cap prevents another reward.</summary>
+        /// <summary>On GS2's clock, as ShowroomCountdown counts. Leave the countdown unset when the start is unknown or the cap prevents another reward.</summary>
         public DateTime? NextRewardAt
         {
             get
@@ -78,7 +78,9 @@ namespace GS2Studio.Showroom.Demo
                 if (started == null || interval <= 0) return null;
                 var idle = IdleMinutes;
                 if (MaximumIdleMinutes > 0 && idle >= MaximumIdleMinutes) return null;
-                return started.Value.AddMinutes((idle / interval + 1) * interval);
+                // IdleStartedAt is on the device clock and known only with the account offset; shift the reward back onto GS2's.
+                return started.Value.AddMinutes((idle / interval + 1) * interval)
+                    .AddSeconds(DemoTimeOffset.Get(_userId));
             }
         }
 

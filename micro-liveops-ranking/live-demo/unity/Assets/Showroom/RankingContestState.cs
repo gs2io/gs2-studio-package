@@ -72,16 +72,16 @@ namespace GS2Studio.Showroom.Demo
 
         public bool Open => EndsAt != null;
 
-        // Account time can advance independently of this device; normalize its deadline before local clock comparisons.
+        // On GS2's clock, as ShowroomCountdown counts; account time can advance independently of this device, so the open check
+        // shifts it onto the device clock.
         public DateTime? EndsAt
         {
             get
             {
                 if (_triggerExpiresAt <= 0) return null;
                 if (!DemoTimeOffset.TryGet(UserId, out var offset)) return null;
-                var ends = DateTimeOffset.FromUnixTimeMilliseconds(_triggerExpiresAt).UtcDateTime
-                    .AddSeconds(-offset);
-                return ends > DateTime.UtcNow ? ends : null;
+                var ends = DateTimeOffset.FromUnixTimeMilliseconds(_triggerExpiresAt).UtcDateTime;
+                return ends.AddSeconds(-offset) > DateTime.UtcNow ? ends : null;
             }
         }
 

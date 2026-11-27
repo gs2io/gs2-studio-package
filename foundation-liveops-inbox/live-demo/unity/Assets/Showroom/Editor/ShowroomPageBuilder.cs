@@ -36,6 +36,7 @@ namespace GS2Studio.Showroom.EditorTools
 
         private const string ManifestDirectory = "Assets/GS2Studio/Generated/Handlers";
         private const string ManifestSuffix = ".showroom.json";
+        private const string CountdownSuffix = "Countdown";
         private const int ManifestSchemaVersion = 2;
 
         // JsonUtility binds fields by name; keep these names aligned with the generated manifest.
@@ -520,6 +521,8 @@ namespace GS2Studio.Showroom.EditorTools
             {
                 case "label":
                 case "templateLabel":
+                // A countdown counts on the session's clock itself and publishes the time left as text.
+                case "countdown":
                     return RowKind.Label;
                 case "value":
                     if (component.valueType == "string") return RowKind.Label;
@@ -541,6 +544,8 @@ namespace GS2Studio.Showroom.EditorTools
                 case "label":
                 case "templateLabel":
                     return "Label";
+                case "countdown":
+                    return CountdownSuffix;
                 case "value":
                     return "Value";
                 case "buttonAction":
@@ -1624,21 +1629,24 @@ namespace GS2Studio.Showroom.EditorTools
             IReadOnlyList<ToggleComponent> toggles)
         {
             var section = new SectionSpec();
+            // A countdown is a clock of its own, never the reading of a gauge or the caption of a button.
+            var countdowns = labels.Where(label => label.Suffix == CountdownSuffix).ToList();
+            var readable = labels.Except(countdowns).ToList();
             var readings = new Dictionary<RowComponent, RowComponent>();
-            if (gauges.Count == 1 && labels.Count == 1) readings[gauges[0]] = labels[0];
+            if (gauges.Count == 1 && readable.Count == 1) readings[gauges[0]] = readable[0];
 
-            foreach (var clock in clocks)
+            foreach (var clock in clocks.Concat(countdowns))
             {
                 section.Rows.Add(new RowSpec { Component = clock.Name });
             }
-            if (clocks.Count == 0 && gauges.Count == 0 && labels.Count == 1 && buttons.Count == 1)
+            if (clocks.Count == 0 && gauges.Count == 0 && readable.Count == 1 && buttons.Count == 1)
             {
                 section.Rows.Add(
-                    new RowSpec { Component = buttons[0].Name, Caption = labels[0].Name });
+                    new RowSpec { Component = buttons[0].Name, Caption = readable[0].Name });
                 return section;
             }
 
-            foreach (var label in labels)
+            foreach (var label in readable)
             {
                 if (!readings.ContainsValue(label))
                     section.Rows.Add(new RowSpec { Component = label.Name });

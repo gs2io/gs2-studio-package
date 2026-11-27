@@ -3,45 +3,55 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
+using Gs2.Unity.Util;
+using Gs2Bind.Clock;
+
 namespace GS2Studio.Showroom
 {
+    // Counts on GS2's clock for the page's session, which the demo clock advance shifts by the account's time offset.
     [AddComponentMenu("GS2 Studio/Showroom/Showroom Countdown")]
     public sealed class ShowroomCountdown : MonoBehaviour
     {
-        // Epoch and zero timestamps mean no deadline, not a countdown that already ended.
-        private static readonly DateTime Unset = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
         [SerializeField] private Text _label;
 
-        private DateTime _deadline;
-        private bool _known;
+        private Gs2Countdown _countdown;
+        private IGameSession _session;
+        private DateTime? _deadline;
 
-        public void SetDeadline(DateTime deadline)
+        // Until a producer sends a deadline, say there is none rather than keep the row's placeholder.
+        private void OnEnable()
         {
-            _deadline = deadline.ToUniversalTime();
-            _known = _deadline > Unset;
-            Render();
+            if (!_deadline.HasValue) Render(null);
         }
 
-        private void Update() => Render();
+        /// <summary>Counts down to a deadline on GS2's clock, as GS2 stamps it; the epoch or earlier is no deadline.</summary>
+        public void SetDeadline(DateTime deadline)
+        {
+            _deadline = deadline;
+            Restart();
+        }
 
-        private void Render()
+        // Until the page has a session, the count is on UTC alone; start again on the session's clock once it has one.
+        private void Update()
+        {
+            if (_deadline.HasValue && _session == null && ShowroomRuntime.TryGet(out _, out _)) Restart();
+            _countdown?.Poll();
+        }
+
+        private void Restart()
+        {
+            _session = ShowroomRuntime.TryGet(out _, out var session) ? session : null;
+            _countdown ??= new Gs2Countdown(Render);
+            _countdown.Start(_session, _deadline);
+        }
+
+        // Gs2Countdown reports no time (GS2's 0 or the epoch) as null and stops after reporting zero.
+        private void Render(TimeSpan? remaining)
         {
             if (_label == null) return;
-            if (!_known)
-            {
-                _label.text = "not set";
-                return;
-            }
-            var remaining = _deadline - DateTime.UtcNow;
-            if (remaining <= TimeSpan.Zero)
-            {
-                _label.text = "ended";
-                return;
-            }
-            _label.text = remaining.TotalDays >= 1
-                ? $"{(int)remaining.TotalDays}d {remaining.Hours:00}:{remaining.Minutes:00}:{remaining.Seconds:00}"
-                : $"{(int)remaining.TotalHours:00}:{remaining.Minutes:00}:{remaining.Seconds:00}";
+            _label.text = !remaining.HasValue ? "not set"
+                : remaining.Value <= TimeSpan.Zero ? "ended"
+                : Gs2SessionClock.Format(remaining.Value);
         }
     }
 }

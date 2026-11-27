@@ -1,4 +1,4 @@
-// The shared countdown uses the device clock; publish the account-offset-adjusted deadline, or default to clear it.
+// The shared countdown counts on GS2's clock; publish the season end as GS2 stamped it, or default to clear it.
 #nullable enable
 
 using System;
@@ -34,7 +34,7 @@ namespace GS2Studio.Showroom.Demo
         private void Publish()
         {
             if (_season == null) return;
-            var endsAt = _season.SeasonEndsOnDevice ?? default;
+            var endsAt = _season.SeasonEndsAt ?? default;
             if (_published == endsAt) return;
             _published = endsAt;
             _onUpdate.Invoke(endsAt);

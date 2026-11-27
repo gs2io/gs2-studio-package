@@ -105,10 +105,6 @@ namespace GS2Studio.Showroom.Demo
 
         public DateTime? SeasonEndsAt { get; private set; }
 
-        // The countdown uses the device clock; an unknown account offset must not be treated as zero.
-        public DateTime? SeasonEndsOnDevice =>
-            DemoTimeOffset.TryGet(UserId, out var offset) ? SeasonEndsAt?.AddSeconds(-offset) : null;
-
         public string? SeasonProblem { get; private set; }
 
         public bool GuildKnown { get; private set; }
