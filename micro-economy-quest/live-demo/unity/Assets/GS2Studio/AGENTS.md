@@ -79,7 +79,12 @@ Then:
   `com.unity.localization` installed, it follows that package's selected locale. REFERENCE.md "Localized text".
 - `Gs2Locale.Current` starts from the device language and can be a regional tag such as `ja-JP`: compare its
   language prefix, not the whole tag.
-- Fixed text, such as headings and button captions, is not generated; the game localizes it.
+- Fixed text, such as headings and button captions, can come from a `UiItem.templateLabel` whose template is text
+  per locale with no placeholders: its generated component sends the text for `Gs2Locale.Current` without waiting
+  for a row and again on `Gs2Locale.Changed`. Wire its `OnUpdate` to the Text as for any label, instead of a
+  hand-written localization script. Like every generated component it needs the type's handler on its GameObject or
+  an ancestor, so put headings under that handler too. REFERENCE.md "Localized templates". Other fixed text is the
+  game's to localize.
 
 ## Verify
 
