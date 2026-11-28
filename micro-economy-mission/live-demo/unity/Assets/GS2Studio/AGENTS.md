@@ -21,9 +21,9 @@ folder of the package DSL directory (`dsl init` writes it).
 One GameObject at the scene root (such as `GS2`) holds:
 
 1. `Gs2ClientHolder` (Add Component > GS2/Core). Add `Assets/GS2Studio/Gs2Environment.asset`, which
-   `deploy unity-environment` writes, to Environments, and set Active Environment Name to the asset's `name`
-   field (`GS2Studio` unless `deploy unity-environment --name` set another), not its file name. Wire its `onError`
-   (an internal field: in the Inspector, or as a serialized property) to its own
+   `deploy unity-environment` writes, to Environments, and set Active Environment Name to the asset's `name`,
+   not its file name. "This project" gives that name, so the asset, which holds the client secret, need not be
+   opened. Wire its `onError` (an internal field: in the Inspector, or as a serialized property) to its own
    `DebugErrorHandler(Gs2Exception, Func<IEnumerator>)`, which logs GS2 errors; without a listener they are not logged.
 2. `Gs2GameSessionHolder` (GS2/Core).
 3. `Gs2AutoLoginAction` (GS2/Account/AutoLogin), which signs in (see "Sign-in"). For testing, wire its `onError`,
@@ -40,6 +40,11 @@ Then:
   the others take is under "This project". REFERENCE.md "Rows in the game" and "Another type's row".
 - A list is a `<Type>ListHandler` with `_itemPrefab` (a prefab with a `<Type>ListItemHandler` at its root
   and the row's components below it) and `_contentParent`; set `_axis` when the type has one.
+- A list handler hands over its rows already sorted, in the order of the type's sort setting (ascending id without
+  one), and keeps its items as children of `_contentParent` in that order as rows come and go (call its
+  `Resort()` after a row's sort property changes). Lay them out with a layout group on `_contentParent` and do
+  not sort them in a script. For another order, change the type's `sort` in the DSL, or set the handler's
+  `Comparer` from a script. REFERENCE.md "Rows in the game" and "Keys and identity".
 - The scene needs an `EventSystem` whose input module matches Player Settings > Active Input Handling
   (`InputSystemUIInputModule` for the Input System package).
 - A `Canvas` added as a component starts in World Space: set Screen Space - Overlay (or Camera), and add a
@@ -67,6 +72,8 @@ fill their lists; do not write scripts that switch panels or buttons.
 
 ## Wiring
 
+- When a type has labels for the parts of one amount and one for their total, show the total unless the user asks
+  for a part.
 - No component writes to a `Text` by itself. Wire the `OnUpdate` (`UnityEvent<string>`) of each label,
   template label and countdown to the text element's `text`: in the Inspector, with
   `UnityEditor.Events.UnityEventTools.AddPersistentListener` in an editor script, or by setting the event's
@@ -173,6 +180,8 @@ fill their lists; do not write scripts that switch panels or buttons.
    target or a gauge without a sprite shows nothing.
 
 ## This project
+
+Active Environment Name of `Gs2ClientHolder`: `GS2Studio` unless `deploy unity-environment --name` sets another. `Assets/GS2Studio/Gs2Environment.asset` is not written yet: `deploy unity-environment` writes it and names it here.
 
 Handler fields to set, each with the values the project gives it: the ids of the rows it deploys, of the rows
 conditions read, and of the rows its actions name with a literal value. A field with no value listed takes an id
